@@ -2,46 +2,133 @@
 <html lang="ru">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Panda Stars</title>
 
     <link rel="stylesheet" href="style.css">
-
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
 </head>
+
 
 <body>
 
-    <div class="container">
 
-        <h1>🐼 Panda Stars</h1>
+<div class="stars"></div>
 
-        <p class="balance">⭐ Баланс: 0</p>
 
-        <button class="menu-btn">
-            🎰 Кейсы
-        </button>
+<!-- Верхняя строка выигрышей -->
 
-        <button class="menu-btn">
-            ⛏ Шахта
-        </button>
+<div class="top-wins">
 
-        <button class="menu-btn">
-            👤 Профиль
-        </button>
+    <div class="top-title">
+        🏆 ТОП:
+    </div>
 
-        <button class="menu-btn">
-            🏆 Топ игроков
-        </button>
+
+    <div class="wins-line">
+
+        <span>
+            Alex 100⭐
+        </span>
+
+        <span>
+            Max 50⭐
+        </span>
+
+        <span>
+            Ivan 27⭐
+        </span>
+
+        <span>
+            Panda 18⭐
+        </span>
 
     </div>
 
-    <script src="script.js"></script>
+</div>
+
+
+
+<!-- Центр -->
+
+<div class="content">
+
+
+    <div id="app">
+
+
+        <h1>
+            🐼 Panda Stars
+        </h1>
+
+
+        <p>
+            Выбери игру снизу
+        </p>
+
+
+    </div>
+
+
+</div>
+
+
+
+
+<!-- Нижнее меню -->
+
+
+<div class="menu">
+
+
+    <button onclick="openPage('cases')">
+
+        🎁
+        <br>
+        Кейсы
+
+    </button>
+
+
+
+    <button onclick="openPage('mine')">
+
+        ⛏
+        <br>
+        Шахта
+
+    </button>
+
+
+
+
+    <button onclick="openPage('profile')">
+
+        👤
+        <br>
+        Профиль
+
+    </button>
+
+
+
+
+    <button onclick="openPage('top')">
+
+        🏆
+        <br>
+        Топ
+
+    </button>
+
+
+</div>
+
+
+
+<script src="script.js"></script>
+
 
 </body>
 

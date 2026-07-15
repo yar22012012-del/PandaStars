@@ -1,67 +1,224 @@
+*{
+    box-sizing:border-box;
+}
+
+
 body{
 
     margin:0;
 
-    background:#111827;
+    height:100vh;
+
+    background:#000;
+
+    color:white;
 
     font-family:Arial;
 
-    color:white;
+    overflow:hidden;
 
 }
 
-.container{
 
-    max-width:420px;
 
-    margin:auto;
+/* космос */
 
-    padding:20px;
+.stars{
 
-}
-
-h1{
-
-    text-align:center;
-
-    margin-top:25px;
-
-}
-
-.balance{
-
-    text-align:center;
-
-    font-size:22px;
-
-    margin-bottom:30px;
-
-}
-
-.menu-btn{
+    position:fixed;
 
     width:100%;
 
-    height:60px;
+    height:100%;
 
-    margin-top:15px;
 
-    border:none;
+    background-image:
+    radial-gradient(white 1px, transparent 1px);
 
-    border-radius:15px;
 
-    background:#2b7fff;
+    background-size:35px 35px;
 
-    color:white;
 
-    font-size:22px;
-
-    cursor:pointer;
+    opacity:0.4;
 
 }
 
-.menu-btn:active{
 
-    transform:scale(.98);
+
+/* верх */
+
+
+.top-wins{
+
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+
+    width:100%;
+
+
+    height:55px;
+
+
+    background:#101010;
+
+
+    display:flex;
+
+    align-items:center;
+
+
+    padding:0 10px;
+
+
+    z-index:5;
+
+
+}
+
+
+
+
+.top-title{
+
+    font-size:15px;
+
+    margin-right:10px;
+
+}
+
+
+
+.wins-line{
+
+
+    display:flex;
+
+
+    gap:15px;
+
+
+    overflow:hidden;
+
+
+    white-space:nowrap;
+
+
+}
+
+
+
+
+
+/* центр */
+
+
+.content{
+
+
+    position:absolute;
+
+
+    top:60px;
+
+
+    bottom:80px;
+
+
+    width:100%;
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    justify-content:center;
+
+
+}
+
+
+
+#app{
+
+    text-align:center;
+
+}
+
+
+
+
+/* меню снизу */
+
+
+.menu{
+
+
+    position:fixed;
+
+
+    bottom:0;
+
+
+    left:0;
+
+
+    width:100%;
+
+
+    height:75px;
+
+
+    background:#111;
+
+
+    border-top:1px solid #333;
+
+
+    display:flex;
+
+
+    justify-content:space-around;
+
+
+    align-items:center;
+
+
+}
+
+
+
+
+
+button{
+
+
+    background:none;
+
+
+    border:0;
+
+
+    color:white;
+
+
+    font-size:14px;
+
+
+}
+
+
+
+button:active{
+
+
+    color:#ffd700;
+
 
 }
