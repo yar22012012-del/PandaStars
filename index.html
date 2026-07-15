@@ -19,24 +19,51 @@
 <div class="app">
 
 
-<!-- ================= ИГРЫ ================= -->
-
-<section id="games" class="screen active">
+<header class="top">
 
 
-<h1>Игры</h1>
+<div class="logo">
+🐼 Panda Stars
+</div>
 
 
-<div class="card game"
-onclick="openCase()">
+<div class="balance">
+
+⭐ <span id="stars">100</span>
+
+</div>
 
 
-<div class="card-icon">
+</header>
+
+
+
+
+
+<main>
+
+
+
+<section id="cases" class="page active">
+
+
+<h1>
+🎁 Кейсы
+</h1>
+
+
+
+<div class="case-card">
+
+
+<div class="case-image">
 🎁
 </div>
 
 
-<div>
+
+<div class="case-info">
+
 
 <h2>
 Бесплатный кейс
@@ -44,29 +71,54 @@ onclick="openCase()">
 
 
 <p>
-Открывай бесплатный кейс раз в 24 часа
+Открывай бесплатный кейс один раз в 24 часа
 </p>
 
 
-</div>
+<button onclick="openCase()">
+
+Открыть
+
+</button>
 
 
 </div>
 
 
+</div>
+
+
+</section>
 
 
 
-<div class="card game"
+
+
+
+
+
+
+<section id="games" class="page">
+
+
+<h1>
+🎮 Игры
+</h1>
+
+
+
+<div class="game-card"
 onclick="openMine()">
 
 
-<div class="card-icon">
+
+<div class="game-icon">
 💣
 </div>
 
 
 <div>
+
 
 <h2>
 Минное поле
@@ -74,7 +126,7 @@ onclick="openMine()">
 
 
 <p>
-Поставь Stars и попробуй увеличить выигрыш
+Умножай свою ставку
 </p>
 
 
@@ -84,95 +136,6 @@ onclick="openMine()">
 </div>
 
 
-
-</section>
-
-
-
-
-
-
-
-<!-- ================= КЕЙС ================= -->
-
-
-<section id="case" class="screen">
-
-
-<button onclick="back()">
-← Назад
-</button>
-
-
-<h1>
-🎁 Бесплатный кейс
-</h1>
-
-
-<div class="panel">
-
-
-<h2>
-Открывай раз в 24 часа
-</h2>
-
-
-<div class="rewards">
-
-
-<div>
-⭐ 1 звезда
-</div>
-
-
-<div>
-⭐⭐ 2 звезды
-</div>
-
-
-<div>
-⭐⭐⭐ 3 звезды
-</div>
-
-
-<div>
-⭐⭐⭐⭐⭐ 5 звёзд
-</div>
-
-
-<div>
-⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ 11 звёзд
-</div>
-
-
-<div>
-⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ 17 звёзд
-</div>
-
-
-<div>
-🎁 Telegram NFT
-</div>
-
-
-</div>
-
-
-<button onclick="openReward()">
-
-Открыть кейс
-
-</button>
-
-
-<h2 id="caseResult">
-
-</h2>
-
-
-</div>
-
-
 </section>
 
 
@@ -183,113 +146,7 @@ onclick="openMine()">
 
 
 
-<!-- ================= МИННОЕ ПОЛЕ ================= -->
-
-
-<section id="mine" class="screen">
-
-
-<button onclick="back()">
-← Назад
-</button>
-
-
-<h1>
-💣 Минное поле
-</h1>
-
-
-
-<div class="panel">
-
-
-<input
-id="bet"
-type="number"
-placeholder="Ставка от 15 Stars">
-
-
-<button onclick="startMine()">
-
-Начать игру
-
-</button>
-
-
-
-<div id="mineField">
-
-
-</div>
-
-
-
-<h2 id="win">
-
-</h2>
-
-
-
-<button onclick="takeWin()">
-
-💰 Забрать выигрыш
-
-</button>
-
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-
-
-<!-- ================= МАГАЗИН ================= -->
-
-
-<section id="shop" class="screen">
-
-
-<h1>
-🛒 Магазин
-</h1>
-
-
-<div class="panel">
-
-
-<h2>
-Магазин Stars
-</h2>
-
-
-<p>
-Скоро здесь появятся покупки
-</p>
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-
-
-<!-- ================= ПРОФИЛЬ ================= -->
-
-
-<section id="profile" class="screen">
+<section id="profile" class="page">
 
 
 <h1>
@@ -297,7 +154,7 @@ placeholder="Ставка от 15 Stars">
 </h1>
 
 
-<div class="panel">
+<div class="profile-box">
 
 
 <h2>
@@ -307,27 +164,75 @@ placeholder="Ставка от 15 Stars">
 
 <p>
 Баланс:
-<span id="balance">
+⭐ <span id="profileStars">
 100
 </span>
-⭐
 </p>
 
 
+
 <p>
-Победы:
+Открыто кейсов:
+<span id="opened">
+0
+</span>
+</p>
+
+
+
+<p>
+Побед:
 <span id="wins">
 0
 </span>
 </p>
 
 
-<p>
-Открыто кейсов:
-<span id="cases">
-0
-</span>
-</p>
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+<section id="mine" class="page">
+
+
+<h1>
+💣 Минное поле
+</h1>
+
+
+<div class="mine-box">
+
+
+<input 
+id="bet"
+placeholder="Ставка от 15 Stars"
+type="number">
+
+
+<button onclick="startMine()">
+Начать
+</button>
+
+
+
+<div id="field"></div>
+
+
+<button onclick="takeMoney()">
+Забрать выигрыш
+</button>
+
+
+<h2 id="result"></h2>
 
 
 </div>
@@ -338,21 +243,31 @@ placeholder="Ставка от 15 Stars">
 
 
 
-
-</div>
-
+</main>
 
 
 
 
 
-<!-- НИЖНЕЕ МЕНЮ -->
-
-<nav class="bottom">
 
 
-<div class="tab active"
-onclick="show('games',this)">
+
+<nav class="bottom-nav">
+
+
+<button onclick="changePage('cases')">
+
+🎁
+<span>
+Кейсы
+</span>
+
+</button>
+
+
+
+
+<button onclick="changePage('games')">
 
 🎮
 
@@ -360,25 +275,13 @@ onclick="show('games',this)">
 Игры
 </span>
 
-</div>
+</button>
 
 
 
-<div class="tab"
-onclick="show('shop',this)">
-
-🛒
-
-<span>
-Магазин
-</span>
-
-</div>
 
 
-
-<div class="tab"
-onclick="show('profile',this)">
+<button onclick="changePage('profile')">
 
 👤
 
@@ -386,7 +289,7 @@ onclick="show('profile',this)">
 Профиль
 </span>
 
-</div>
+</button>
 
 
 </nav>
@@ -395,7 +298,12 @@ onclick="show('profile',this)">
 
 
 
+</div>
+
+
+
 <script src="scripts.js"></script>
+
 
 </body>
 

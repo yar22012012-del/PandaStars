@@ -1,68 +1,42 @@
-// ==========================
+// ===============================
 // ДАННЫЕ ИГРОКА
-// ==========================
+// ===============================
 
 
-let balance = Number(localStorage.getItem("balance")) || 100;
+let stars = Number(localStorage.getItem("stars")) || 100;
+
+let opened = Number(localStorage.getItem("opened")) || 0;
 
 let wins = Number(localStorage.getItem("wins")) || 0;
 
-let cases = Number(localStorage.getItem("cases")) || 0;
 
-
-
-document.getElementById("balance").innerHTML = balance;
-
-document.getElementById("wins").innerHTML = wins;
-
-document.getElementById("cases").innerHTML = cases;
+updateProfile();
 
 
 
 
 
-// ==========================
-// ПЕРЕКЛЮЧЕНИЕ ЭКРАНОВ
-// ==========================
+
+// ===============================
+// ПЕРЕКЛЮЧЕНИЕ СТРАНИЦ
+// ===============================
 
 
-function show(id, element){
+function changePage(page){
 
 
-let screens=document.querySelectorAll(".screen");
+    document.querySelectorAll(".page")
+    .forEach(item=>{
 
+        item.classList.remove("active");
 
-screens.forEach(screen=>{
-
-screen.classList.remove("active");
-
-});
-
-
-
-document
-.getElementById(id)
-.classList.add("active");
+    });
 
 
 
-
-let tabs=document.querySelectorAll(".tab");
-
-
-tabs.forEach(tab=>{
-
-tab.classList.remove("active");
-
-});
-
-
-
-if(element){
-
-element.classList.add("active");
-
-}
+    document
+    .getElementById(page)
+    .classList.add("active");
 
 
 }
@@ -73,78 +47,61 @@ element.classList.add("active");
 
 
 
-function back(){
 
-
-show("games");
-
-
-}
-
-
-
-
-
-
-// ==========================
+// ===============================
 // БЕСПЛАТНЫЙ КЕЙС
-// ==========================
-
-
-function openCase(){
-
-
-show("case");
-
-
-}
-
-
+// ===============================
 
 
 const rewards=[
 
-
-{
-name:"⭐ 1 звезда",
-chance:8
-},
-
-
-{
-name:"⭐⭐ 2 звезды",
-chance:45
-},
+    {
+        text:"⭐ 1 звезда",
+        chance:10,
+        value:1
+    },
 
 
-{
-name:"⭐⭐⭐ 3 звезды",
-chance:35
-},
+    {
+        text:"⭐⭐ 2 звезды",
+        chance:45,
+        value:2
+    },
 
 
-{
-name:"⭐⭐⭐⭐⭐ 5 звёзд",
-chance:7
-},
+    {
+        text:"⭐⭐⭐ 3 звезды",
+        chance:30,
+        value:3
+    },
 
 
-{
-name:"⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ 11 звёзд",
-chance:3
-},
+    {
+        text:"⭐⭐⭐⭐⭐ 5 звёзд",
+        chance:8,
+        value:5
+    },
 
 
-{
-name:"⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ 17 звёзд",
-chance:1.9
-},
+    {
+        text:"⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ 11 звёзд",
+        chance:5,
+        value:11
+    },
 
 
-{
-name:"🎁 Telegram NFT подарок",
-chance:0.1
-}
+    {
+        text:"⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ 17 звёзд",
+        chance:1.9,
+        value:17
+    },
+
+
+    {
+        text:"🎁 Telegram NFT подарок",
+        chance:0.1,
+        value:0
+    }
 
 
 ];
@@ -154,30 +111,43 @@ chance:0.1
 
 
 
-
-function openReward(){
-
+function openCase(){
 
 
-let last=localStorage.getItem("caseTime");
+
+let lastOpen =
+localStorage.getItem("caseTime");
+
 
 
 let now=Date.now();
 
 
 
-if(last && now-last < 86400000){
+
+if(lastOpen){
 
 
-let hours=Math.ceil(
-(86400000-(now-last))/3600000
+let time=now-Number(lastOpen);
+
+
+
+if(time < 86400000){
+
+
+let left =
+86400000-time;
+
+
+
+let hours =
+Math.floor(left/3600000);
+
+
+
+alert(
+"⏳ Кейс будет доступен через "+hours+" часов"
 );
-
-
-
-document.getElementById("caseResult").innerHTML=
-
-"⏳ Попробуй через "+hours+" часов";
 
 
 return;
@@ -186,29 +156,34 @@ return;
 }
 
 
+}
+
+
+
+
 
 
 let random=Math.random()*100;
 
 
-let count=0;
+let sum=0;
 
 
 let result;
 
 
 
-for(let reward of rewards){
+for(let item of rewards){
 
 
-count+=reward.chance;
+sum+=item.chance;
 
 
 
-if(random<=count){
+if(random<=sum){
 
 
-result=reward.name;
+result=item;
 
 
 break;
@@ -217,19 +192,23 @@ break;
 }
 
 
-
 }
 
 
 
-cases++;
-
-
-localStorage.setItem("cases",cases);
 
 
 
-document.getElementById("cases").innerHTML=cases;
+opened++;
+
+
+
+if(result.value>0){
+
+stars+=result.value;
+
+}
+
 
 
 
@@ -239,10 +218,28 @@ now
 );
 
 
+localStorage.setItem(
+"stars",
+stars
+);
 
-document.getElementById("caseResult").innerHTML=
 
-"🎉 Выпало:<br><br>"+result;
+localStorage.setItem(
+"opened",
+opened
+);
+
+
+
+
+
+updateProfile();
+
+
+
+alert(
+"🎉 Выпало:\n\n"+result.text
+);
 
 
 
@@ -254,18 +251,24 @@ document.getElementById("caseResult").innerHTML=
 
 
 
-// ==========================
+
+
+
+// ===============================
 // МИННОЕ ПОЛЕ
-// ==========================
+// ===============================
 
 
-let mineActive=false;
 
-let mineCells=[];
+let mines=[];
 
 let currentWin=0;
 
-let currentMultiplier=1;
+let game=false;
+
+let safe=0;
+
+
 
 
 
@@ -274,11 +277,11 @@ let currentMultiplier=1;
 
 function openMine(){
 
-
-show("mine");
-
+changePage("mine");
 
 }
+
+
 
 
 
@@ -289,18 +292,32 @@ function startMine(){
 
 
 
-let bet=document.getElementById("bet").value;
-
-
-
-bet=Number(bet);
+let bet =
+Number(
+document.getElementById("bet").value
+);
 
 
 
 if(bet<15){
 
+alert(
+"Минимальная ставка 15 Stars"
+);
 
-alert("Минимальная ставка 15 Stars");
+return;
+
+}
+
+
+
+if(bet>stars){
+
+
+alert(
+"Недостаточно Stars"
+);
+
 
 return;
 
@@ -310,63 +327,48 @@ return;
 
 
 
-if(bet>balance){
+
+stars-=bet;
 
 
-alert("Недостаточно Stars");
+save();
 
-
-return;
-
-
-}
-
-
-
-
-balance-=bet;
-
-
-saveBalance();
 
 
 
 currentWin=bet;
 
+safe=0;
 
-currentMultiplier=1;
-
-
-
-mineCells=[];
+game=true;
 
 
 
-let field=document.getElementById("mineField");
+
+let field =
+document.getElementById("field");
 
 
 field.innerHTML="";
 
 
 
+mines=[];
 
-
-// создаём 5 мин
-
-
-let mines=[];
 
 
 while(mines.length<5){
 
 
-let number=Math.floor(Math.random()*9);
+let x=
+Math.floor(Math.random()*9);
 
 
-if(!mines.includes(number)){
+
+if(!mines.includes(x)){
 
 
-mines.push(number);
+mines.push(x);
 
 
 }
@@ -382,7 +384,9 @@ for(let i=0;i<9;i++){
 
 
 
-let cell=document.createElement("div");
+let cell =
+document.createElement("div");
+
 
 
 cell.className="mine-cell";
@@ -392,16 +396,26 @@ cell.className="mine-cell";
 cell.onclick=function(){
 
 
-clickMine(i,mines,cell);
+openCell(
+i,
+cell
+);
 
 
 };
 
 
 
+
 field.appendChild(cell);
 
 
+}
+
+
+
+updateProfile();
+
 
 }
 
@@ -409,42 +423,31 @@ field.appendChild(cell);
 
 
 
-mineActive=true;
 
 
 
-}
+function openCell(id,cell){
 
 
-
-
-
-
-
-function clickMine(index,mines,cell){
-
-
-
-if(!mineActive)
-
+if(!game)
 return;
 
 
 
 
-
-if(mines.includes(index)){
+if(mines.includes(id)){
 
 
 cell.innerHTML="💣";
 
-cell.classList.add("mine-boom");
+
+alert(
+"💥 Бомба! Ты проиграл"
+);
 
 
-alert("💥 Ты проиграл");
 
-
-mineActive=false;
+game=false;
 
 
 currentWin=0;
@@ -459,34 +462,38 @@ return;
 
 
 
+safe++;
+
+
 
 let multipliers=[1,2,2.5,3];
 
 
-let safeCount=
-document.querySelectorAll(".mine-safe").length;
+let multiplier =
+multipliers[safe-1] || 3;
 
 
 
-currentMultiplier=
-multipliers[safeCount];
+currentWin =
+Math.floor(
+currentWin*multiplier
+);
 
-
-
-currentWin*=currentMultiplier;
 
 
 
 cell.innerHTML="⭐";
 
-cell.classList.add("mine-safe");
+cell.style.background="#166534";
 
 
 
-document.getElementById("win").innerHTML=
+document.getElementById("result")
+.innerHTML=
 
-"Выигрыш: "+Math.floor(currentWin)+" ⭐";
-
+"Выигрыш: "+
+currentWin+
+" ⭐";
 
 
 }
@@ -498,41 +505,41 @@ document.getElementById("win").innerHTML=
 
 
 
-function takeWin(){
+function takeMoney(){
 
 
 
-if(!mineActive || currentWin<=0)
-
+if(currentWin<=0)
 return;
 
 
 
-balance+=Math.floor(currentWin);
+
+stars+=currentWin;
 
 
 wins++;
 
 
 
-saveBalance();
+save();
 
 
 
-document.getElementById("balance").innerHTML=balance;
+game=false;
 
-document.getElementById("wins").innerHTML=wins;
+
+currentWin=0;
+
+
+
+updateProfile();
 
 
 
 alert(
-"Ты забрал "+Math.floor(currentWin)+" Stars"
+"💰 Вы забрали выигрыш"
 );
-
-
-
-mineActive=false;
-
 
 
 }
@@ -545,26 +552,66 @@ mineActive=false;
 
 
 
-// ==========================
-// СОХРАНЕНИЕ
-// ==========================
+// ===============================
+// ПРОФИЛЬ
+// ===============================
 
 
-function saveBalance(){
+
+function updateProfile(){
+
+
+document
+.getElementById("stars")
+.innerHTML=stars;
+
+
+
+document
+.getElementById("profileStars")
+.innerHTML=stars;
+
+
+
+document
+.getElementById("opened")
+.innerHTML=opened;
+
+
+
+document
+.getElementById("wins")
+.innerHTML=wins;
+
+
+
+}
+
+
+
+
+
+
+
+function save(){
 
 
 localStorage.setItem(
-"balance",
-balance
+"stars",
+stars
 );
 
+
+localStorage.setItem(
+"opened",
+opened
+);
 
 
 localStorage.setItem(
 "wins",
 wins
 );
-
 
 
 }
