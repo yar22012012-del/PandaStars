@@ -1,30 +1,7 @@
-
-const buttons = document.querySelectorAll(".nav-item");
-
-
-buttons.forEach(button => {
+function openCase(){
 
 
-    button.addEventListener("click",()=>{
+alert("Бесплатный кейс");
 
 
-        buttons.forEach(btn=>{
-
-
-            btn.classList.remove("active");
-
-
-        });
-
-
-
-        button.classList.add("active");
-
-
-
-    });
-
-
-});
-
-
+}

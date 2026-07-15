@@ -1,63 +1,52 @@
-*{
+* {
 
-    margin:0;
-    padding:0;
+margin:0;
+padding:0;
+box-sizing:border-box;
 
-    box-sizing:border-box;
-
-    font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Arial,
-    sans-serif;
+font-family:Arial, sans-serif;
 
 }
 
 
 
-body{
+body {
 
 
-    width:100%;
-    height:100vh;
+height:100vh;
 
 
-    background:#020617;
+background:#050816;
 
 
-    color:white;
-
-
-    overflow:hidden;
+color:white;
 
 
 }
 
 
 
-
-.background{
-
-
-    position:fixed;
-
-    inset:0;
+/* основной экран */
 
 
-    background:
+.games {
 
-    radial-gradient(
-    circle at top,
-    #172554,
-    transparent 40%
-    ),
 
-    radial-gradient(
-    circle at bottom,
-    #0f172a,
-    transparent 50%
-    );
+padding:30px;
+
+
+}
+
+
+
+
+.games h1 {
+
+
+font-size:32px;
+
+
+margin-bottom:25px;
 
 
 }
@@ -66,87 +55,53 @@ body{
 
 
 
-.stars{
+/* кнопка игры */
 
 
-    position:absolute;
-
-    width:100%;
-
-    height:100%;
+.game-card {
 
 
-    opacity:.5;
+width:100%;
 
 
-    background-image:
+background:#121c38;
 
 
-    radial-gradient(
-    white 1px,
-    transparent 1px
-    );
+border-radius:25px;
 
 
-    background-size:
-
-    80px 80px;
+padding:20px;
 
 
-    animation:
-
-    moveStars 40s linear infinite;
+display:flex;
 
 
-}
+align-items:center;
 
 
-
-@keyframes moveStars{
-
-
-    from{
-
-        transform:translateY(0);
-
-    }
+gap:20px;
 
 
-    to{
+cursor:pointer;
 
-        transform:translateY(-300px);
 
-    }
+border:1px solid rgba(255,255,255,0.08);
+
+
+transition:.25s;
 
 
 }
 
 
 
+.game-card:hover {
 
 
-.top{
+background:#192750;
 
 
-    position:relative;
-
-
-    padding:40px 25px;
-
-
-}
-
-
-
-.top h1{
-
-
-    font-size:32px;
-
-    font-weight:700;
-
-
-    letter-spacing:1px;
+transform:translateY(-4px);
 
 
 }
@@ -155,13 +110,46 @@ body{
 
 
 
-.main-content{
+.game-icon {
 
 
-    position:relative;
+width:70px;
 
 
-    padding:25px;
+height:70px;
+
+
+background:#2563eb;
+
+
+border-radius:22px;
+
+
+display:flex;
+
+
+justify-content:center;
+
+
+align-items:center;
+
+
+font-size:38px;
+
+
+}
+
+
+
+
+
+.game-text h2 {
+
+
+font-size:22px;
+
+
+margin-bottom:8px;
 
 
 }
@@ -169,52 +157,14 @@ body{
 
 
 
-.welcome{
+
+.game-text p {
 
 
-    background:
-
-    rgba(255,255,255,0.08);
+font-size:14px;
 
 
-    border:
-
-    1px solid rgba(255,255,255,0.12);
-
-
-    border-radius:25px;
-
-
-    padding:30px;
-
-
-    backdrop-filter:blur(15px);
-
-
-}
-
-
-
-.welcome h2{
-
-
-    font-size:26px;
-
-
-    margin-bottom:10px;
-
-
-}
-
-
-
-.welcome p{
-
-
-    color:#b8c1d9;
-
-
-    font-size:15px;
+color:#aab5d0;
 
 
 }
@@ -225,67 +175,41 @@ body{
 
 
 
-/* нижняя панель */
+
+/* нижнее меню */
 
 
-.navigation{
+.bottom-menu {
 
 
-    position:fixed;
+position:fixed;
 
 
-    bottom:15px;
+bottom:0;
 
 
-    left:50%;
+left:0;
 
 
-    transform:translateX(-50%);
+width:100%;
 
 
-    width:
-
-    calc(100% - 30px);
+height:85px;
 
 
-    height:85px;
+background:#111c38;
 
 
-
-    background:
-
-    rgba(15,23,42,.9);
+border-radius:25px 25px 0 0;
 
 
-    border-radius:28px;
+display:flex;
 
 
-
-    display:flex;
-
-
-    justify-content:space-around;
+justify-content:space-around;
 
 
-    align-items:center;
-
-
-    padding:10px;
-
-
-
-    backdrop-filter:blur(20px);
-
-
-
-    border:
-
-    1px solid rgba(255,255,255,.08);
-
-
-    box-shadow:
-
-    0 10px 40px rgba(0,0,0,.5);
+align-items:center;
 
 
 }
@@ -293,121 +217,48 @@ body{
 
 
 
+.menu-item {
 
 
-
-.nav-item{
-
-
-    flex:1;
+display:flex;
 
 
-    height:100%;
+flex-direction:column;
 
 
-    border:0;
+align-items:center;
 
 
-    background:none;
+color:white;
 
 
-    color:white;
+opacity:.6;
 
 
-    display:flex;
-
-
-    flex-direction:column;
-
-
-    justify-content:center;
-
-
-    align-items:center;
-
-
-
-    gap:5px;
-
-
-
-    opacity:.55;
-
-
-    transition:.25s;
-
-
-    cursor:pointer;
+font-size:13px;
 
 
 }
 
 
 
+.menu-item.active {
 
 
-
-.nav-item span{
-
-
-    font-size:13px;
+opacity:1;
 
 
 }
 
 
 
+.menu-icon {
 
 
-
-.icon svg{
-
-
-    width:26px;
-
-    height:26px;
+font-size:25px;
 
 
-    stroke:white;
-
-
-    fill:none;
-
-
-    stroke-width:2;
-
-
-}
-
-
-
-
-
-
-.nav-item.active{
-
-
-    opacity:1;
-
-
-}
-
-
-
-.nav-item.active .icon{
-
-
-    transform:translateY(-3px);
-
-
-}
-
-
-
-.nav-item:active{
-
-
-    transform:scale(.9);
+margin-bottom:5px;
 
 
 }
