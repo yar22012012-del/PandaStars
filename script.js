@@ -1,28 +1,20 @@
-// пока пустой файл
-// позже сюда добавим:
-// переходы между страницами
-// загрузку игр
-// магазин
-// профиль пользователя
+const items = document.querySelectorAll(".menu-item");
 
 
-console.log("Cosmo App запущено");
+items.forEach(item => {
 
 
-
-const buttons = document.querySelectorAll(".menu-btn");
-
-
-buttons.forEach(button => {
+    item.addEventListener("click",()=>{
 
 
-    button.addEventListener("click", () => {
+        items.forEach(i=>{
+
+            i.classList.remove("active");
+
+        });
 
 
-        console.log(
-            "Нажата кнопка:",
-            button.innerText
-        );
+        item.classList.add("active");
 
 
     });

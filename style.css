@@ -1,10 +1,8 @@
-body {
+* {
 
     margin:0;
-
-    background:#000;
-
-    color:white;
+    padding:0;
+    box-sizing:border-box;
 
     font-family:Arial, sans-serif;
 
@@ -12,12 +10,37 @@ body {
 
 
 
-/* нижняя панель как в Telegram */
+body {
 
-.bottom-menu {
+    height:100vh;
+
+    background:#000;
+
+    color:white;
+
+    overflow:hidden;
+
+}
+
+
+
+/* место под будущее приложение */
+
+.app {
+
+    height:100vh;
+
+}
+
+
+
+/* нижняя панель */
+
+.bottom-bar {
 
 
     position:fixed;
+
 
     bottom:0;
 
@@ -27,10 +50,13 @@ body {
     width:100%;
 
 
-    height:75px;
+    height:85px;
 
 
-    background:#17233d;
+    background:#121c38;
+
+
+    border-radius:25px 25px 0 0;
 
 
     display:flex;
@@ -42,16 +68,17 @@ body {
     align-items:center;
 
 
-    border-radius:22px 22px 0 0;
+    padding:8px 15px;
+
 
 
 }
 
 
 
-/* вкладка */
+/* элементы меню */
 
-.tab {
+.menu-item {
 
 
     flex:1;
@@ -72,37 +99,28 @@ body {
     align-items:center;
 
 
+
     color:white;
+
+
+    opacity:0.55;
 
 
     font-size:13px;
 
 
-    opacity:0.75;
-
 
     transition:0.2s;
 
 
-}
-
-
-
-/* иконка */
-
-.icon {
-
-    font-size:25px;
-
-    margin-bottom:3px;
 
 }
 
 
 
-/* активная вкладка */
+/* активный элемент */
 
-.tab.active {
+.menu-item.active {
 
 
     opacity:1;
@@ -112,10 +130,39 @@ body {
 
 
 
+/* SVG иконки */
+
+.menu-item svg {
+
+
+    width:27px;
+
+    height:27px;
+
+
+    margin-bottom:5px;
+
+
+    fill:none;
+
+
+    stroke:white;
+
+
+    stroke-width:2;
+
+
+
+}
+
+
+
 /* нажатие */
 
-.tab:active {
+.menu-item:active {
+
 
     transform:scale(0.9);
+
 
 }
