@@ -1,10 +1,8 @@
 import aiosqlite
-
+import time
 
 
 DATABASE = "database/panda.db"
-
-
 
 
 
@@ -22,6 +20,8 @@ async def create_database():
 
                 balance INTEGER DEFAULT 0,
 
+                total_earned INTEGER DEFAULT 0,
+
                 referrals INTEGER DEFAULT 0,
 
                 referred_by INTEGER DEFAULT 0,
@@ -35,9 +35,22 @@ async def create_database():
         )
 
 
+        # добавление новой колонки для старой базы
+        try:
+
+            await db.execute(
+                """
+                ALTER TABLE users
+                ADD COLUMN total_earned INTEGER DEFAULT 0
+                """
+            )
+
+        except:
+
+            pass
+
+
         await db.commit()
-
-
 
 
 
@@ -56,10 +69,7 @@ async def get_user(user_id):
             (user_id,)
         )
 
-
         return await cursor.fetchone()
-
-
 
 
 
@@ -95,8 +105,6 @@ async def add_user(user_id, username, ref=0):
 
 
 
-
-
 async def add_referral(user_id):
 
     async with aiosqlite.connect(DATABASE) as db:
@@ -109,6 +117,8 @@ async def add_referral(user_id):
 
             balance = balance + 4,
 
+            total_earned = total_earned + 4,
+
             referrals = referrals + 1
 
             WHERE id=?
@@ -119,8 +129,6 @@ async def add_referral(user_id):
 
 
         await db.commit()
-
-
 
 
 
@@ -157,8 +165,6 @@ async def get_balance(user_id):
 
 
 
-
-
 async def add_balance(user_id, amount):
 
     async with aiosqlite.connect(DATABASE) as db:
@@ -167,12 +173,22 @@ async def add_balance(user_id, amount):
             """
             UPDATE users
 
-            SET balance = balance + ?
+            SET
+
+            balance = balance + ?,
+
+            total_earned = total_earned +
+            CASE
+                WHEN ? > 0 THEN ?
+                ELSE 0
+            END
 
             WHERE id=?
 
             """,
             (
+                amount,
+                amount,
                 amount,
                 user_id
             )
@@ -182,6 +198,35 @@ async def add_balance(user_id, amount):
         await db.commit()
 
 
+
+
+
+async def get_total_earned(user_id):
+
+    async with aiosqlite.connect(DATABASE) as db:
+
+        cursor = await db.execute(
+            """
+            SELECT total_earned
+
+            FROM users
+
+            WHERE id=?
+
+            """,
+            (user_id,)
+        )
+
+
+        result = await cursor.fetchone()
+
+
+        if result:
+
+            return result[0]
+
+
+        return 0
 
 
 
@@ -205,8 +250,6 @@ async def get_profile(user_id):
 
 
         return await cursor.fetchone()
-
-
 
 
 
@@ -243,8 +286,6 @@ async def get_referrals(user_id):
 
 
 
-
-
 async def get_top_referrals():
 
     async with aiosqlite.connect(DATABASE) as db:
@@ -264,8 +305,6 @@ async def get_top_referrals():
 
 
         return await cursor.fetchall()
-
-
 
 
 
@@ -302,12 +341,7 @@ async def get_click(user_id):
 
 
 
-
-
 async def update_click(user_id):
-
-    import time
-
 
     async with aiosqlite.connect(DATABASE) as db:
 

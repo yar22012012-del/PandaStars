@@ -1,224 +1,94 @@
-*{
-    box-sizing:border-box;
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #05050f;
+    color: white;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
 }
 
-
-body{
-
-    margin:0;
-
-    height:100vh;
-
-    background:#000;
-
-    color:white;
-
-    font-family:Arial;
-
-    overflow:hidden;
-
+/* Размытые звёзды */
+body::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+        radial-gradient(circle at 20% 25%, rgba(255,255,255,0.18) 1px, transparent 3px),
+        radial-gradient(circle at 80% 35%, rgba(255,255,255,0.15) 1px, transparent 3px),
+        radial-gradient(circle at 45% 70%, rgba(255,255,255,0.22) 1px, transparent 3px),
+        radial-gradient(circle at 75% 80%, rgba(255,255,255,0.13) 1px, transparent 3px);
+    background-size: 85px 85px;
+    filter: blur(1.8px);
+    z-index: 0;
 }
 
+.app { height: 100vh; display: flex; flex-direction: column; position: relative; z-index: 1; }
 
-
-/* космос */
-
-.stars{
-
-    position:fixed;
-
-    width:100%;
-
-    height:100%;
-
-
-    background-image:
-    radial-gradient(white 1px, transparent 1px);
-
-
-    background-size:35px 35px;
-
-
-    opacity:0.4;
-
+.header {
+    padding: 14px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10,10,25,0.95);
+    backdrop-filter: blur(10px);
+    z-index: 10;
 }
 
-
-
-/* верх */
-
-
-.top-wins{
-
-
-    position:fixed;
-
-    top:0;
-
-    left:0;
-
-
-    width:100%;
-
-
-    height:55px;
-
-
-    background:#101010;
-
-
-    display:flex;
-
-    align-items:center;
-
-
-    padding:0 10px;
-
-
-    z-index:5;
-
-
+.level {
+    background: linear-gradient(135deg, #6d28d9, #c026d3);
+    padding: 7px 18px;
+    border-radius: 30px;
+    font-weight: bold;
 }
 
-
-
-
-.top-title{
-
-    font-size:15px;
-
-    margin-right:10px;
-
+.balance {
+    background: rgba(234, 179, 8, 0.2);
+    padding: 8px 16px;
+    border-radius: 30px;
+    border: 1px solid rgba(234,179,8,0.4);
 }
 
-
-
-.wins-line{
-
-
-    display:flex;
-
-
-    gap:15px;
-
-
-    overflow:hidden;
-
-
-    white-space:nowrap;
-
-
+/* Контент */
+.content {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+    z-index: 2;
 }
 
-
-
-
-
-/* центр */
-
-
-.content{
-
-
-    position:absolute;
-
-
-    top:60px;
-
-
-    bottom:80px;
-
-
-    width:100%;
-
-
-    display:flex;
-
-
-    align-items:center;
-
-
-    justify-content:center;
-
-
+/* Нижняя панель — как на твоём фото */
+.bottom-nav {
+    display: flex;
+    background: rgba(15, 15, 35, 0.97);
+    backdrop-filter: blur(16px);
+    padding: 8px 0 12px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 -4px 15px rgba(0,0,0,0.6);
+    z-index: 20;
 }
 
-
-
-#app{
-
-    text-align:center;
-
+.nav-item {
+    flex: 1;
+    background: none;
+    border: none;
+    color: #94a3b8;
+    font-size: 0.78rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    padding: 6px 0;
+    transition: all 0.2s;
 }
 
-
-
-
-/* меню снизу */
-
-
-.menu{
-
-
-    position:fixed;
-
-
-    bottom:0;
-
-
-    left:0;
-
-
-    width:100%;
-
-
-    height:75px;
-
-
-    background:#111;
-
-
-    border-top:1px solid #333;
-
-
-    display:flex;
-
-
-    justify-content:space-around;
-
-
-    align-items:center;
-
-
+.nav-item.active {
+    color: #e0e7ff;
+    transform: translateY(-2px);
 }
 
-
-
-
-
-button{
-
-
-    background:none;
-
-
-    border:0;
-
-
-    color:white;
-
-
-    font-size:14px;
-
-
-}
-
-
-
-button:active{
-
-
-    color:#ffd700;
-
-
+.nav-item span {
+    font-size: 0.75rem;
 }

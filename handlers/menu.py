@@ -6,7 +6,8 @@ from database.db import (
     get_balance,
     get_profile,
     get_referrals,
-    get_top_referrals
+    get_top_referrals,
+    get_total_earned
 )
 
 
@@ -21,8 +22,6 @@ router = Router()
 
 
 
-
-
 # =========================
 # НАЗАД В МЕНЮ
 # =========================
@@ -34,15 +33,17 @@ async def back(callback: CallbackQuery):
 
     await callback.message.edit_text(
 
+
         "⭐ <b>Panda Stars</b>\n\n"
         "Выберите раздел:",
 
+
         reply_markup=main_menu(),
+
 
         parse_mode="HTML"
 
     )
-
 
 
 
@@ -65,11 +66,15 @@ async def balance(callback: CallbackQuery):
 
     await callback.message.edit_text(
 
+
         "⭐ <b>Ваш баланс</b>\n\n"
+
 
         f"У вас: ⭐ {money} Stars",
 
+
         reply_markup=back_button(),
+
 
         parse_mode="HTML"
 
@@ -99,25 +104,92 @@ async def profile(callback: CallbackQuery):
 
 
         await callback.answer(
+
             "❌ Профиль не найден",
+
             show_alert=True
+
         )
 
         return
 
 
 
+
+    balance = await get_balance(
+
+        callback.from_user.id
+
+    )
+
+
+    total = await get_total_earned(
+
+        callback.from_user.id
+
+    )
+
+
+    friends = await get_referrals(
+
+        callback.from_user.id
+
+    )
+
+
+
+    if callback.from_user.username:
+
+
+        username = "@" + callback.from_user.username
+
+
+    else:
+
+
+        username = "Без username"
+
+
+
+
+    link = (
+
+        "https://t.me/pandastarsobot"
+
+        f"?start={callback.from_user.id}"
+
+    )
+
+
+
+
     await callback.message.edit_text(
 
-        "👤 <b>Ваш профиль</b>\n\n"
 
-        f"🆔 ID: <code>{user[0]}</code>\n"
+        "👤 <b>ВАШ ПРОФИЛ</b>\n\n"
 
-        f"⭐ Баланс: {user[2]}\n"
 
-        f"👥 Приглашено: {user[3]}",
+        f"🐼 Пользователь: {username}\n"
+
+        f"🆔 ID: <code>{callback.from_user.id}</code>\n\n"
+
+
+        f"⭐ Баланс: {balance}\n"
+
+        f"💰 Всего заработано: {total}⭐\n\n"
+
+
+        f"👥 Всего друзей: {friends}\n\n"
+
+
+        "🔗 Ваша реферальная ссылка:\n"
+
+        f"<code>{link}</code>",
+
+
 
         reply_markup=back_button(),
+
 
         parse_mode="HTML"
 
@@ -145,7 +217,7 @@ async def friends(callback: CallbackQuery):
 
     link = (
 
-        f"https://t.me/pandastarsobot"
+        "https://t.me/pandastarsobot"
 
         f"?start={callback.from_user.id}"
 
@@ -155,17 +227,23 @@ async def friends(callback: CallbackQuery):
 
     await callback.message.edit_text(
 
+
         "👥 <b>Реферальная система</b>\n\n"
+
 
         f"Приглашено друзей: {count}\n\n"
 
+
         "⭐ За каждого друга: +4 Stars\n\n"
+
 
         "Ваша ссылка:\n"
 
         f"<code>{link}</code>",
 
+
         reply_markup=back_button(),
+
 
         parse_mode="HTML"
 
@@ -191,6 +269,7 @@ async def top(callback: CallbackQuery):
     text = "🏆 <b>ТОП 10 РЕФЕРАЛОВ</b>\n\n"
 
 
+
     if not users:
 
 
@@ -212,9 +291,12 @@ async def top(callback: CallbackQuery):
 
             if username:
 
+
                 name = "@" + username
 
+
             else:
+
 
                 name = "Без username"
 
@@ -223,6 +305,7 @@ async def top(callback: CallbackQuery):
             text += (
 
                 f"{place}. {name} — "
+
                 f"{user[1]} 👥\n"
 
             )
@@ -235,9 +318,12 @@ async def top(callback: CallbackQuery):
 
     await callback.message.edit_text(
 
+
         text,
 
+
         reply_markup=back_button(),
+
 
         parse_mode="HTML"
 
@@ -258,11 +344,14 @@ async def tasks(callback: CallbackQuery):
 
     await callback.message.edit_text(
 
+
         "📋 <b>Задания</b>\n\n"
 
         "⭐ Здесь скоро появятся задания.",
 
+
         reply_markup=back_button(),
+
 
         parse_mode="HTML"
 

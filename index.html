@@ -1,135 +1,47 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Panda Stars</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Панда Кликер</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
-
 <body>
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="level">LVL 12</div>
+            <div class="balance">
+                <span>⭐ 4600</span>
+                <button class="add-btn">+</button>
+            </div>
+        </header>
 
+        <!-- Основной контент -->
+        <main class="content" id="main-content">
+            <!-- Карточки будут здесь -->
+        </main>
 
-<div class="stars"></div>
-
-
-<!-- Верхняя строка выигрышей -->
-
-<div class="top-wins">
-
-    <div class="top-title">
-        🏆 ТОП:
+        <!-- Нижняя навигация -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" data-page="game">
+                🎮<br><span>Игры</span>
+            </button>
+            <button class="nav-item" data-page="contests">
+                🏆<br><span>Конкурсы</span>
+            </button>
+            <button class="nav-item" data-page="leaders">
+                👑<br><span>Лидеры</span>
+            </button>
+            <button class="nav-item" data-page="shop">
+                🛒<br><span>Магазин</span>
+            </button>
+            <button class="nav-item" data-page="profile">
+                👤<br><span>Профиль</span>
+            </button>
+        </nav>
     </div>
 
-
-    <div class="wins-line">
-
-        <span>
-            Alex 100⭐
-        </span>
-
-        <span>
-            Max 50⭐
-        </span>
-
-        <span>
-            Ivan 27⭐
-        </span>
-
-        <span>
-            Panda 18⭐
-        </span>
-
-    </div>
-
-</div>
-
-
-
-<!-- Центр -->
-
-<div class="content">
-
-
-    <div id="app">
-
-
-        <h1>
-            🐼 Panda Stars
-        </h1>
-
-
-        <p>
-            Выбери игру снизу
-        </p>
-
-
-    </div>
-
-
-</div>
-
-
-
-
-<!-- Нижнее меню -->
-
-
-<div class="menu">
-
-
-    <button onclick="openPage('cases')">
-
-        🎁
-        <br>
-        Кейсы
-
-    </button>
-
-
-
-    <button onclick="openPage('mine')">
-
-        ⛏
-        <br>
-        Шахта
-
-    </button>
-
-
-
-
-    <button onclick="openPage('profile')">
-
-        👤
-        <br>
-        Профиль
-
-    </button>
-
-
-
-
-    <button onclick="openPage('top')">
-
-        🏆
-        <br>
-        Топ
-
-    </button>
-
-
-</div>
-
-
-
-<script src="script.js"></script>
-
-
+    <script src="script.js"></script>
 </body>
-
 </html>
