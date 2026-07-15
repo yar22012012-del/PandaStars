@@ -9,172 +9,122 @@
 body {
 
     height: 100vh;
-    overflow: hidden;
+    width: 100%;
 
     background: black;
-    color: white;
+
+    overflow: hidden;
+
+    color:white;
 
 }
 
 
-/* фон со звездами */
+/* Космический фон */
 
 .stars {
 
-    position: fixed;
-    width: 100%;
-    height: 100%;
+    position:absolute;
 
-    background-image:
-    radial-gradient(circle, white 1px, transparent 2px),
+    width:100%;
+    height:100%;
+
+
+    background:
+
     radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 2px),
-    radial-gradient(circle, rgba(255,255,255,0.5) 2px, transparent 3px);
+    radial-gradient(circle, rgba(255,255,255,0.5) 1px, transparent 2px),
+    radial-gradient(circle, rgba(255,255,255,0.7) 1px, transparent 2px);
+
 
     background-size:
-    120px 120px,
-    200px 200px,
-    300px 300px;
-
-    background-position:
-    0 0,
-    50px 80px,
-    100px 40px;
+    180px 180px,
+    250px 250px,
+    320px 320px;
 
 
-    filter: blur(1.5px);
+    filter: blur(3px);
 
-    opacity: 0.35;
-
-    animation: moveStars 80s linear infinite;
+    opacity:0.5;
 
 }
 
 
-
-@keyframes moveStars {
-
-    from {
-        transform: translateY(0);
-    }
-
-    to {
-        transform: translateY(-300px);
-    }
-
-}
-
-
-
-
-
-.app {
-
-    height: 100vh;
-    position: relative;
-
-}
-
-
-
-/* заголовок временный */
-
-h1 {
-
-    text-align: center;
-    padding-top: 40px;
-
-    font-size: 35px;
-
-    letter-spacing: 3px;
-
-}
-
-
-
-
-/* нижнее меню */
+/* Нижняя панель */
 
 .bottom-menu {
 
-    position: fixed;
+    position:fixed;
 
-    bottom: 20px;
-    left: 50%;
+    bottom:25px;
 
-    transform: translateX(-50%);
+    left:50%;
 
-
-    width: 90%;
-    max-width: 450px;
+    transform:translateX(-50%);
 
 
-    display: flex;
-    justify-content: space-around;
-    gap: 15px;
+    width:90%;
 
+    max-width:450px;
+
+
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:15px;
 
 }
 
 
 
-/* кнопки */
+/* Стеклянные кнопки */
 
 .menu-btn {
 
 
-    width: 110px;
-    height: 70px;
+    flex:1;
 
 
-    border: none;
-
-    color: white;
-
-    font-size: 15px;
-
-    background: rgba(255,255,255,0.08);
+    height:55px;
 
 
-    backdrop-filter: blur(15px);
-
-    -webkit-backdrop-filter: blur(15px);
+    border-radius:18px;
 
 
-    border-radius: 20px;
+    border:1px solid rgba(255,255,255,0.25);
 
 
-    box-shadow:
+    background:
 
-    0 0 20px rgba(255,255,255,0.08);
-
-
-    cursor: pointer;
+    rgba(255,255,255,0.08);
 
 
-    display: flex;
+    backdrop-filter:blur(15px);
 
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
+    -webkit-backdrop-filter:blur(15px);
 
 
-    transition: 0.3s;
+
+    color:white;
+
+
+    font-size:16px;
+
+    font-weight:500;
+
+
+    cursor:pointer;
+
+
+    transition:0.3s;
+
 
 }
 
 
 
-.menu-btn span {
-
-    font-size: 22px;
-
-    margin-bottom: 5px;
-
-}
-
-
+/* эффект при нажатии */
 
 .menu-btn:hover {
 
@@ -184,7 +134,7 @@ h1 {
     rgba(255,255,255,0.18);
 
 
-    transform: translateY(-5px);
+    transform:translateY(-4px);
 
 
 }
