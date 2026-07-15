@@ -1,0 +1,67 @@
+body{
+
+    margin:0;
+
+    background:#111827;
+
+    font-family:Arial;
+
+    color:white;
+
+}
+
+.container{
+
+    max-width:420px;
+
+    margin:auto;
+
+    padding:20px;
+
+}
+
+h1{
+
+    text-align:center;
+
+    margin-top:25px;
+
+}
+
+.balance{
+
+    text-align:center;
+
+    font-size:22px;
+
+    margin-bottom:30px;
+
+}
+
+.menu-btn{
+
+    width:100%;
+
+    height:60px;
+
+    margin-top:15px;
+
+    border:none;
+
+    border-radius:15px;
+
+    background:#2b7fff;
+
+    color:white;
+
+    font-size:22px;
+
+    cursor:pointer;
+
+}
+
+.menu-btn:active{
+
+    transform:scale(.98);
+
+}
