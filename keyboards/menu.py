@@ -1,5 +1,4 @@
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, WebAppInfo
 
 
 def main_menu():
@@ -65,13 +64,23 @@ def main_menu():
                     callback_data="clicker"
                 )
 
+            ],
+
+
+            [
+
+                InlineKeyboardButton(
+                    text="🌐 Mini App",
+                    web_app=WebAppInfo(
+                        url="https://yar22012012-del.github.io/PandaStars/"
+                    )
+                )
+
             ]
 
         ]
 
     )
-
-
 
 
 
