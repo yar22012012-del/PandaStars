@@ -1,23 +1,30 @@
-const items = document.querySelectorAll(".menu-item");
+
+const buttons = document.querySelectorAll(".nav-item");
 
 
-items.forEach(item => {
+buttons.forEach(button => {
 
 
-    item.addEventListener("click",()=>{
+    button.addEventListener("click",()=>{
 
 
-        items.forEach(i=>{
+        buttons.forEach(btn=>{
 
-            i.classList.remove("active");
+
+            btn.classList.remove("active");
+
 
         });
 
 
-        item.classList.add("active");
+
+        button.classList.add("active");
+
 
 
     });
 
 
 });
+
+

@@ -1,62 +1,264 @@
-* {
+*{
 
     margin:0;
     padding:0;
+
     box-sizing:border-box;
 
-    font-family:Arial, sans-serif;
+    font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Arial,
+    sans-serif;
 
 }
 
 
 
-body {
+body{
 
+
+    width:100%;
     height:100vh;
 
-    background:#000;
+
+    background:#020617;
+
 
     color:white;
 
+
     overflow:hidden;
 
+
+}
+
+
+
+
+.background{
+
+
+    position:fixed;
+
+    inset:0;
+
+
+    background:
+
+    radial-gradient(
+    circle at top,
+    #172554,
+    transparent 40%
+    ),
+
+    radial-gradient(
+    circle at bottom,
+    #0f172a,
+    transparent 50%
+    );
+
+
 }
 
 
 
-/* место под будущее приложение */
 
-.app {
 
-    height:100vh;
+.stars{
+
+
+    position:absolute;
+
+    width:100%;
+
+    height:100%;
+
+
+    opacity:.5;
+
+
+    background-image:
+
+
+    radial-gradient(
+    white 1px,
+    transparent 1px
+    );
+
+
+    background-size:
+
+    80px 80px;
+
+
+    animation:
+
+    moveStars 40s linear infinite;
+
 
 }
+
+
+
+@keyframes moveStars{
+
+
+    from{
+
+        transform:translateY(0);
+
+    }
+
+
+    to{
+
+        transform:translateY(-300px);
+
+    }
+
+
+}
+
+
+
+
+
+.top{
+
+
+    position:relative;
+
+
+    padding:40px 25px;
+
+
+}
+
+
+
+.top h1{
+
+
+    font-size:32px;
+
+    font-weight:700;
+
+
+    letter-spacing:1px;
+
+
+}
+
+
+
+
+
+.main-content{
+
+
+    position:relative;
+
+
+    padding:25px;
+
+
+}
+
+
+
+
+.welcome{
+
+
+    background:
+
+    rgba(255,255,255,0.08);
+
+
+    border:
+
+    1px solid rgba(255,255,255,0.12);
+
+
+    border-radius:25px;
+
+
+    padding:30px;
+
+
+    backdrop-filter:blur(15px);
+
+
+}
+
+
+
+.welcome h2{
+
+
+    font-size:26px;
+
+
+    margin-bottom:10px;
+
+
+}
+
+
+
+.welcome p{
+
+
+    color:#b8c1d9;
+
+
+    font-size:15px;
+
+
+}
+
+
+
+
 
 
 
 /* нижняя панель */
 
-.bottom-bar {
+
+.navigation{
 
 
     position:fixed;
 
 
-    bottom:0;
-
-    left:0;
+    bottom:15px;
 
 
-    width:100%;
+    left:50%;
+
+
+    transform:translateX(-50%);
+
+
+    width:
+
+    calc(100% - 30px);
 
 
     height:85px;
 
 
-    background:#121c38;
+
+    background:
+
+    rgba(15,23,42,.9);
 
 
-    border-radius:25px 25px 0 0;
+    border-radius:28px;
+
 
 
     display:flex;
@@ -68,23 +270,48 @@ body {
     align-items:center;
 
 
-    padding:8px 15px;
+    padding:10px;
 
+
+
+    backdrop-filter:blur(20px);
+
+
+
+    border:
+
+    1px solid rgba(255,255,255,.08);
+
+
+    box-shadow:
+
+    0 10px 40px rgba(0,0,0,.5);
 
 
 }
 
 
 
-/* элементы меню */
 
-.menu-item {
+
+
+
+.nav-item{
 
 
     flex:1;
 
 
     height:100%;
+
+
+    border:0;
+
+
+    background:none;
+
+
+    color:white;
 
 
     display:flex;
@@ -100,27 +327,64 @@ body {
 
 
 
-    color:white;
-
-
-    opacity:0.55;
-
-
-    font-size:13px;
+    gap:5px;
 
 
 
-    transition:0.2s;
+    opacity:.55;
 
+
+    transition:.25s;
+
+
+    cursor:pointer;
 
 
 }
 
 
 
-/* активный элемент */
 
-.menu-item.active {
+
+
+.nav-item span{
+
+
+    font-size:13px;
+
+
+}
+
+
+
+
+
+
+.icon svg{
+
+
+    width:26px;
+
+    height:26px;
+
+
+    stroke:white;
+
+
+    fill:none;
+
+
+    stroke-width:2;
+
+
+}
+
+
+
+
+
+
+.nav-item.active{
 
 
     opacity:1;
@@ -130,39 +394,20 @@ body {
 
 
 
-/* SVG иконки */
-
-.menu-item svg {
+.nav-item.active .icon{
 
 
-    width:27px;
-
-    height:27px;
-
-
-    margin-bottom:5px;
-
-
-    fill:none;
-
-
-    stroke:white;
-
-
-    stroke-width:2;
-
+    transform:translateY(-3px);
 
 
 }
 
 
 
-/* нажатие */
-
-.menu-item:active {
+.nav-item:active{
 
 
-    transform:scale(0.9);
+    transform:scale(.9);
 
 
 }
