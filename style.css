@@ -9,45 +9,46 @@ body {
     position: relative;
 }
 
-/* Размытые звёзды */
+/* Размытые звезды */
 body::before {
     content: '';
     position: absolute;
     inset: 0;
     background: 
         radial-gradient(circle at 20% 25%, rgba(255,255,255,0.18) 1px, transparent 3px),
-        radial-gradient(circle at 80% 35%, rgba(255,255,255,0.15) 1px, transparent 3px),
-        radial-gradient(circle at 45% 70%, rgba(255,255,255,0.22) 1px, transparent 3px),
-        radial-gradient(circle at 75% 80%, rgba(255,255,255,0.13) 1px, transparent 3px);
-    background-size: 85px 85px;
-    filter: blur(1.8px);
+        radial-gradient(circle at 80% 30%, rgba(255,255,255,0.16) 1px, transparent 3px),
+        radial-gradient(circle at 40% 70%, rgba(255,255,255,0.20) 1px, transparent 3px),
+        radial-gradient(circle at 75% 85%, rgba(255,255,255,0.14) 1px, transparent 3px);
+    background-size: 80px 80px;
+    filter: blur(1.5px);
     z-index: 0;
 }
 
 .app { height: 100vh; display: flex; flex-direction: column; position: relative; z-index: 1; }
 
+/* Header */
 .header {
     padding: 14px 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(10,10,25,0.95);
+    background: rgba(10,10,30,0.95);
     backdrop-filter: blur(10px);
     z-index: 10;
 }
 
 .level {
     background: linear-gradient(135deg, #6d28d9, #c026d3);
-    padding: 7px 18px;
+    padding: 8px 18px;
     border-radius: 30px;
     font-weight: bold;
 }
 
 .balance {
-    background: rgba(234, 179, 8, 0.2);
+    background: rgba(234,179,8,0.2);
     padding: 8px 16px;
     border-radius: 30px;
-    border: 1px solid rgba(234,179,8,0.4);
+    border: 1px solid rgba(234,179,8,0.5);
 }
 
 /* Контент */
@@ -58,15 +59,13 @@ body::before {
     z-index: 2;
 }
 
-/* Нижняя панель — как на твоём фото */
+/* Нижняя панель */
 .bottom-nav {
     display: flex;
-    background: rgba(15, 15, 35, 0.97);
-    backdrop-filter: blur(16px);
-    padding: 8px 0 12px;
-    border-top: 1px solid rgba(255,255,255,0.08);
+    background: rgba(15, 23, 42, 0.98);
+    padding: 10px 0 14px;
+    border-top: 1px solid rgba(148,163,184,0.2);
     box-shadow: 0 -4px 15px rgba(0,0,0,0.6);
-    z-index: 20;
 }
 
 .nav-item {
@@ -74,21 +73,16 @@ body::before {
     background: none;
     border: none;
     color: #94a3b8;
-    font-size: 0.78rem;
+    font-size: 0.82rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 3px;
+    gap: 4px;
     padding: 6px 0;
-    transition: all 0.2s;
+    transition: 0.2s;
 }
 
 .nav-item.active {
-    color: #e0e7ff;
-    transform: translateY(-2px);
-}
-
-.nav-item span {
-    font-size: 0.75rem;
+    color: #bae6fd;
+    transform: scale(1.08);
 }
