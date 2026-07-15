@@ -19,25 +19,24 @@
 <div class="app">
 
 
-<section class="games-page">
+<!-- ================= ИГРЫ ================= -->
+
+<section id="games" class="screen active">
 
 
-<h1>
-Игры
-</h1>
+<h1>Игры</h1>
 
 
+<div class="card game"
+onclick="openCase()">
 
-<div class="game-card">
 
-
-<div class="game-icon">
+<div class="card-icon">
 🎁
 </div>
 
 
-<div class="game-info">
-
+<div>
 
 <h2>
 Бесплатный кейс
@@ -55,76 +54,339 @@
 </div>
 
 
+
+
+
+<div class="card game"
+onclick="openMine()">
+
+
+<div class="card-icon">
+💣
+</div>
+
+
+<div>
+
+<h2>
+Минное поле
+</h2>
+
+
+<p>
+Поставь Stars и попробуй увеличить выигрыш
+</p>
+
+
+</div>
+
+
+</div>
+
+
+
 </section>
 
 
 
+
+
+
+
+<!-- ================= КЕЙС ================= -->
+
+
+<section id="case" class="screen">
+
+
+<button onclick="back()">
+← Назад
+</button>
+
+
+<h1>
+🎁 Бесплатный кейс
+</h1>
+
+
+<div class="panel">
+
+
+<h2>
+Открывай раз в 24 часа
+</h2>
+
+
+<div class="rewards">
+
+
+<div>
+⭐ 1 звезда
+</div>
+
+
+<div>
+⭐⭐ 2 звезды
+</div>
+
+
+<div>
+⭐⭐⭐ 3 звезды
+</div>
+
+
+<div>
+⭐⭐⭐⭐⭐ 5 звёзд
+</div>
+
+
+<div>
+⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ 11 звёзд
+</div>
+
+
+<div>
+⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ 17 звёзд
+</div>
+
+
+<div>
+🎁 Telegram NFT
+</div>
+
+
+</div>
+
+
+<button onclick="openReward()">
+
+Открыть кейс
+
+</button>
+
+
+<h2 id="caseResult">
+
+</h2>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ================= МИННОЕ ПОЛЕ ================= -->
+
+
+<section id="mine" class="screen">
+
+
+<button onclick="back()">
+← Назад
+</button>
+
+
+<h1>
+💣 Минное поле
+</h1>
+
+
+
+<div class="panel">
+
+
+<input
+id="bet"
+type="number"
+placeholder="Ставка от 15 Stars">
+
+
+<button onclick="startMine()">
+
+Начать игру
+
+</button>
+
+
+
+<div id="mineField">
+
+
+</div>
+
+
+
+<h2 id="win">
+
+</h2>
+
+
+
+<button onclick="takeWin()">
+
+💰 Забрать выигрыш
+
+</button>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- ================= МАГАЗИН ================= -->
+
+
+<section id="shop" class="screen">
+
+
+<h1>
+🛒 Магазин
+</h1>
+
+
+<div class="panel">
+
+
+<h2>
+Магазин Stars
+</h2>
+
+
+<p>
+Скоро здесь появятся покупки
+</p>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- ================= ПРОФИЛЬ ================= -->
+
+
+<section id="profile" class="screen">
+
+
+<h1>
+👤 Профиль
+</h1>
+
+
+<div class="panel">
+
+
+<h2>
+Игрок
+</h2>
+
+
+<p>
+Баланс:
+<span id="balance">
+100
+</span>
+⭐
+</p>
+
+
+<p>
+Победы:
+<span id="wins">
+0
+</span>
+</p>
+
+
+<p>
+Открыто кейсов:
+<span id="cases">
+0
+</span>
+</p>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
 </div>
 
 
 
 
 
-<!-- Нижняя панель -->
+
+<!-- НИЖНЕЕ МЕНЮ -->
+
+<nav class="bottom">
 
 
-<nav class="bottom-nav">
+<div class="tab active"
+onclick="show('games',this)">
 
-
-<div class="nav-item active">
-
-
-<div class="nav-icon">
 🎮
-</div>
-
 
 <span>
 Игры
 </span>
 
-
 </div>
 
 
 
+<div class="tab"
+onclick="show('shop',this)">
 
-
-<div class="nav-item">
-
-
-<div class="nav-icon">
 🛒
-</div>
-
 
 <span>
 Магазин
 </span>
 
-
 </div>
 
 
 
+<div class="tab"
+onclick="show('profile',this)">
 
-
-
-<div class="nav-item">
-
-
-<div class="nav-icon">
 👤
-</div>
-
 
 <span>
 Профиль
 </span>
 
-
 </div>
-
 
 
 </nav>
@@ -132,8 +394,8 @@
 
 
 
-<script src="scripts.js"></script>
 
+<script src="scripts.js"></script>
 
 </body>
 
