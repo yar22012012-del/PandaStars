@@ -1,42 +1,33 @@
-// ===============================
-// ДАННЫЕ ИГРОКА
-// ===============================
+let balance =
+Number(localStorage.getItem("balance")) || 100;
 
 
-let stars = Number(localStorage.getItem("stars")) || 100;
-
-let opened = Number(localStorage.getItem("opened")) || 0;
-
-let wins = Number(localStorage.getItem("wins")) || 0;
+let opened =
+Number(localStorage.getItem("opened")) || 0;
 
 
-updateProfile();
+
+update();
 
 
 
 
 
-
-// ===============================
-// ПЕРЕКЛЮЧЕНИЕ СТРАНИЦ
-// ===============================
+function changeScreen(id){
 
 
-function changePage(page){
+document.querySelectorAll(".screen")
+.forEach(x=>{
 
+x.classList.remove("active");
 
-    document.querySelectorAll(".page")
-    .forEach(item=>{
-
-        item.classList.remove("active");
-
-    });
+});
 
 
 
-    document
-    .getElementById(page)
-    .classList.add("active");
+document
+.getElementById(id)
+.classList.add("active");
 
 
 }
@@ -47,64 +38,61 @@ function changePage(page){
 
 
 
-
-// ===============================
-// БЕСПЛАТНЫЙ КЕЙС
-// ===============================
-
-
 const rewards=[
 
-    {
-        text:"⭐ 1 звезда",
-        chance:10,
-        value:1
-    },
+
+{
+name:"⭐⭐ 2 Stars",
+value:2,
+chance:45
+},
 
 
-    {
-        text:"⭐⭐ 2 звезды",
-        chance:45,
-        value:2
-    },
+{
+name:"⭐⭐⭐ 3 Stars",
+value:3,
+chance:35
+},
 
 
-    {
-        text:"⭐⭐⭐ 3 звезды",
-        chance:30,
-        value:3
-    },
+{
+name:"⭐ 1 Star",
+value:1,
+chance:8
+},
 
 
-    {
-        text:"⭐⭐⭐⭐⭐ 5 звёзд",
-        chance:8,
-        value:5
-    },
+{
+name:"⭐⭐⭐⭐⭐ 5 Stars",
+value:5,
+chance:7
+},
 
 
-    {
-        text:"⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ 11 звёзд",
-        chance:5,
-        value:11
-    },
+{
+name:"⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ 11 Stars",
+value:11,
+chance:3
+},
 
 
-    {
-        text:"⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ 17 звёзд",
-        chance:1.9,
-        value:17
-    },
+{
+name:"⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ 17 Stars",
+value:17,
+chance:1.9
+},
 
 
-    {
-        text:"🎁 Telegram NFT подарок",
-        chance:0.1,
-        value:0
-    }
+{
+name:"🎁 Telegram NFT",
+value:300,
+chance:.1
+}
 
 
 ];
+
+
 
 
 
@@ -115,39 +103,29 @@ function openCase(){
 
 
 
-let lastOpen =
+let last =
 localStorage.getItem("caseTime");
 
 
 
-let now=Date.now();
+let now =
+Date.now();
 
 
 
 
-if(lastOpen){
-
-
-let time=now-Number(lastOpen);
-
-
-
-if(time < 86400000){
+if(last){
 
 
 let left =
-86400000-time;
+86400000-(now-last);
 
 
 
-let hours =
-Math.floor(left/3600000);
+if(left>0){
 
 
-
-alert(
-"⏳ Кейс будет доступен через "+hours+" часов"
-);
+showTimer(left);
 
 
 return;
@@ -163,32 +141,29 @@ return;
 
 
 
-let random=Math.random()*100;
+let random =
+Math.random()*100;
 
 
-let sum=0;
+let total=0;
 
 
-let result;
-
-
-
-for(let item of rewards){
-
-
-sum+=item.chance;
+let win;
 
 
 
-if(random<=sum){
+for(let r of rewards){
 
 
-result=item;
+total+=r.chance;
 
+
+if(random<=total){
+
+win=r;
 
 break;
 
-
 }
 
 
@@ -197,19 +172,23 @@ break;
 
 
 
+balance+=win.value;
 
 
 opened++;
 
 
 
-if(result.value>0){
+localStorage.setItem(
+"balance",
+balance
+);
 
-stars+=result.value;
 
-}
-
-
+localStorage.setItem(
+"opened",
+opened
+);
 
 
 localStorage.setItem(
@@ -218,282 +197,19 @@ now
 );
 
 
-localStorage.setItem(
-"stars",
-stars
-);
-
-
-localStorage.setItem(
-"opened",
-opened
-);
-
-
-
-
-
-updateProfile();
-
-
-
-alert(
-"🎉 Выпало:\n\n"+result.text
-);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-// ===============================
-// МИННОЕ ПОЛЕ
-// ===============================
-
-
-
-let mines=[];
-
-let currentWin=0;
-
-let game=false;
-
-let safe=0;
-
-
-
-
-
-
-
-
-function openMine(){
-
-changePage("mine");
-
-}
-
-
-
-
-
-
-
-
-function startMine(){
-
-
-
-let bet =
-Number(
-document.getElementById("bet").value
-);
-
-
-
-if(bet<15){
-
-alert(
-"Минимальная ставка 15 Stars"
-);
-
-return;
-
-}
-
-
-
-if(bet>stars){
-
-
-alert(
-"Недостаточно Stars"
-);
-
-
-return;
-
-
-}
-
-
-
-
-
-stars-=bet;
-
-
-save();
-
-
-
-
-currentWin=bet;
-
-safe=0;
-
-game=true;
-
-
-
-
-let field =
-document.getElementById("field");
-
-
-field.innerHTML="";
-
-
-
-mines=[];
-
-
-
-while(mines.length<5){
-
-
-let x=
-Math.floor(Math.random()*9);
-
-
-
-if(!mines.includes(x)){
-
-
-mines.push(x);
-
-
-}
-
-
-}
-
-
-
-
-
-for(let i=0;i<9;i++){
-
-
-
-let cell =
-document.createElement("div");
-
-
-
-cell.className="mine-cell";
-
-
-
-cell.onclick=function(){
-
-
-openCell(
-i,
-cell
-);
-
-
-};
-
-
-
-
-field.appendChild(cell);
-
-
-}
-
-
-
-updateProfile();
-
-
-}
-
-
-
-
-
-
-
-
-function openCell(id,cell){
-
-
-if(!game)
-return;
-
-
-
-
-if(mines.includes(id)){
-
-
-cell.innerHTML="💣";
-
-
-alert(
-"💥 Бомба! Ты проиграл"
-);
-
-
-
-game=false;
-
-
-currentWin=0;
-
-
-return;
-
-
-}
-
-
-
-
-
-safe++;
-
-
-
-let multipliers=[1,2,2.5,3];
-
-
-let multiplier =
-multipliers[safe-1] || 3;
-
-
-
-currentWin =
-Math.floor(
-currentWin*multiplier
-);
-
-
-
-
-cell.innerHTML="⭐";
-
-cell.style.background="#166534";
-
 
 
 document.getElementById("result")
 .innerHTML=
 
-"Выигрыш: "+
-currentWin+
-" ⭐";
+"🎉 Выпало:<br>"+win.name;
+
+
+
+update();
+
+
+startTimer();
 
 
 }
@@ -504,42 +220,77 @@ currentWin+
 
 
 
-
-function takeMoney(){
-
+function startTimer(){
 
 
-if(currentWin<=0)
+setInterval(()=>{
+
+
+let last =
+localStorage.getItem("caseTime");
+
+
+if(!last)return;
+
+
+
+let left =
+86400000-(Date.now()-last);
+
+
+
+if(left<=0){
+
+
+document.getElementById("timer")
+.innerHTML=
+"Доступен сейчас";
+
+
 return;
 
 
-
-
-stars+=currentWin;
-
-
-wins++;
+}
 
 
 
-save();
+showTimer(left);
 
 
 
-game=false;
+},1000);
 
 
-currentWin=0;
-
-
-
-updateProfile();
+}
 
 
 
-alert(
-"💰 Вы забрали выигрыш"
-);
+
+
+
+function showTimer(ms){
+
+
+let h =
+Math.floor(ms/3600000);
+
+
+let m =
+Math.floor(ms%3600000/60000);
+
+
+let s =
+Math.floor(ms%60000/1000);
+
+
+
+document.getElementById("timer")
+.innerHTML=
+
+"Следующее открытие: "
++h+":"+
+m+":"+
+s;
 
 
 }
@@ -550,68 +301,19 @@ alert(
 
 
 
+function update(){
 
 
-// ===============================
-// ПРОФИЛЬ
-// ===============================
+document.getElementById("balance")
+.innerHTML=balance;
 
 
-
-function updateProfile(){
-
-
-document
-.getElementById("stars")
-.innerHTML=stars;
+document.getElementById("profileBalance")
+.innerHTML=balance;
 
 
-
-document
-.getElementById("profileStars")
-.innerHTML=stars;
-
-
-
-document
-.getElementById("opened")
+document.getElementById("opened")
 .innerHTML=opened;
-
-
-
-document
-.getElementById("wins")
-.innerHTML=wins;
-
-
-
-}
-
-
-
-
-
-
-
-function save(){
-
-
-localStorage.setItem(
-"stars",
-stars
-);
-
-
-localStorage.setItem(
-"opened",
-opened
-);
-
-
-localStorage.setItem(
-"wins",
-wins
-);
 
 
 }

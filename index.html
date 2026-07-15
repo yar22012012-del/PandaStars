@@ -19,8 +19,7 @@
 <div class="app">
 
 
-<header class="top">
-
+<header>
 
 <div class="logo">
 🐼 Panda Stars
@@ -28,11 +27,8 @@
 
 
 <div class="balance">
-
-⭐ <span id="stars">100</span>
-
+⭐ <span id="balance">100</span>
 </div>
-
 
 </header>
 
@@ -43,26 +39,23 @@
 <main>
 
 
-
-<section id="cases" class="page active">
+<section id="cases" class="screen active">
 
 
 <h1>
-🎁 Кейсы
+🎁 Бесплатный кейс
 </h1>
 
 
 
-<div class="case-card">
+
+<div class="case-box">
 
 
-<div class="case-image">
+<div class="case-icon">
 🎁
 </div>
 
-
-
-<div class="case-info">
 
 
 <h2>
@@ -70,22 +63,103 @@
 </h2>
 
 
-<p>
-Открывай бесплатный кейс один раз в 24 часа
+
+<p id="timer">
+
+Доступен сейчас
+
 </p>
 
 
-<button onclick="openCase()">
 
-Открыть
+<button id="openButton" onclick="openCase()">
+
+Открыть кейс
 
 </button>
 
 
+
+<div id="result">
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="rewards">
+
+
+<h2>
+Награды
+</h2>
+
+
+
+<div class="reward-container">
+
+
+<div class="reward">
+⭐⭐
+<br>
+2 Stars
+</div>
+
+
+<div class="reward">
+⭐⭐⭐
+<br>
+3 Stars
+</div>
+
+
+<div class="reward">
+⭐
+<br>
+1 Star
+</div>
+
+
+<div class="reward">
+⭐⭐⭐⭐⭐
+<br>
+5 Stars
+</div>
+
+
+<div class="reward">
+⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐
+<br>
+11 Stars
+</div>
+
+
+<div class="reward rare">
+⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐
+<br>
+17 Stars
+</div>
+
+
+<div class="reward nft">
+🎁
+<br>
+Telegram NFT
 </div>
 
 
 </div>
+
+</div>
+
 
 
 </section>
@@ -97,8 +171,7 @@
 
 
 
-
-<section id="games" class="page">
+<section id="games" class="screen">
 
 
 <h1>
@@ -106,32 +179,9 @@
 </h1>
 
 
+<div class="empty">
 
-<div class="game-card"
-onclick="openMine()">
-
-
-
-<div class="game-icon">
-💣
-</div>
-
-
-<div>
-
-
-<h2>
-Минное поле
-</h2>
-
-
-<p>
-Умножай свою ставку
-</p>
-
-
-</div>
-
+Скоро появятся игры
 
 </div>
 
@@ -144,9 +194,7 @@ onclick="openMine()">
 
 
 
-
-
-<section id="profile" class="page">
+<section id="profile" class="screen">
 
 
 <h1>
@@ -154,17 +202,13 @@ onclick="openMine()">
 </h1>
 
 
-<div class="profile-box">
 
-
-<h2>
-Игрок
-</h2>
+<div class="profile">
 
 
 <p>
 Баланс:
-⭐ <span id="profileStars">
+⭐ <span id="profileBalance">
 100
 </span>
 </p>
@@ -177,62 +221,6 @@ onclick="openMine()">
 0
 </span>
 </p>
-
-
-
-<p>
-Побед:
-<span id="wins">
-0
-</span>
-</p>
-
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-<section id="mine" class="page">
-
-
-<h1>
-💣 Минное поле
-</h1>
-
-
-<div class="mine-box">
-
-
-<input 
-id="bet"
-placeholder="Ставка от 15 Stars"
-type="number">
-
-
-<button onclick="startMine()">
-Начать
-</button>
-
-
-
-<div id="field"></div>
-
-
-<button onclick="takeMoney()">
-Забрать выигрыш
-</button>
-
-
-<h2 id="result"></h2>
 
 
 </div>
@@ -252,10 +240,10 @@ type="number">
 
 
 
-<nav class="bottom-nav">
+<nav>
 
 
-<button onclick="changePage('cases')">
+<button onclick="changeScreen('cases')">
 
 🎁
 <span>
@@ -266,11 +254,9 @@ type="number">
 
 
 
-
-<button onclick="changePage('games')">
+<button onclick="changeScreen('games')">
 
 🎮
-
 <span>
 Игры
 </span>
@@ -279,12 +265,9 @@ type="number">
 
 
 
-
-
-<button onclick="changePage('profile')">
+<button onclick="changeScreen('profile')">
 
 👤
-
 <span>
 Профиль
 </span>
@@ -293,8 +276,6 @@ type="number">
 
 
 </nav>
-
-
 
 
 
