@@ -1,106 +1,203 @@
+/* ==============================
+   PANDA STARS UI
+   Telegram Mini App Style
+================================ */
+
+
 *{
-
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Arial,
+    sans-serif;
 }
 
 
 
 body{
 
-background:
+    background:
+    radial-gradient(
+        circle at top,
+        #243b75 0%,
+        #0b1020 35%,
+        #020617 100%
+    );
 
-radial-gradient(circle at top,#1e3a8a,transparent 35%),
-#020617;
+    color:white;
 
+    min-height:100vh;
 
-color:white;
-
-height:100vh;
+    overflow:hidden;
 
 }
 
+
+
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    width:100%;
+
+    height:100%;
+
+    background-image:
+
+    radial-gradient(
+        white 1px,
+        transparent 1px
+    );
+
+    background-size:45px 45px;
+
+    opacity:.15;
+
+    pointer-events:none;
+
+}
+
+
+
+
+
+
+/* APP */
 
 
 .app{
 
-height:100vh;
+    height:100vh;
+
+    display:flex;
+
+    flex-direction:column;
 
 }
 
 
+
+
+
+
+
+/* TOP BAR */
 
 
 header{
 
-height:70px;
 
-display:flex;
+    height:75px;
 
-justify-content:space-between;
+    display:flex;
 
-align-items:center;
+    align-items:center;
 
-padding:20px;
+    justify-content:space-between;
+
+
+    padding:15px 20px;
 
 
 }
 
 
 
-.logo{
-
-font-size:22px;
-
-font-weight:bold;
-
-}
+.title{
 
 
+    font-size:23px;
 
-.balance{
+    font-weight:800;
 
-background:#172554;
+    letter-spacing:.5px;
 
-padding:10px 18px;
-
-border-radius:20px;
 
 }
 
 
 
 
+.stars{
 
 
-main{
+    background:
 
-height:calc(100vh - 160px);
+    rgba(255,255,255,.1);
+
+
+    border:
+
+    1px solid rgba(255,255,255,.15);
+
+
+    padding:
+
+    10px 18px;
+
+
+    border-radius:20px;
+
+
+    backdrop-filter:blur(15px);
+
+
+    font-size:18px;
+
 
 }
 
 
 
-.screen{
 
-display:none;
 
-padding:20px;
 
-height:100%;
 
-overflow:auto;
+/* CONTENT */
+
+
+.content{
+
+
+    flex:1;
+
+    overflow:hidden;
 
 }
 
 
 
-.screen.active{
+.page{
 
-display:block;
+
+    display:none;
+
+
+    height:100%;
+
+
+    padding:20px;
+
+
+    overflow-y:auto;
+
+
+}
+
+
+
+.page.active{
+
+
+    display:block;
+
 
 }
 
@@ -109,28 +206,10 @@ display:block;
 
 h1{
 
-margin-bottom:25px;
 
-}
+    font-size:32px;
 
-
-
-
-
-.case-box,
-.profile,
-.empty{
-
-
-background:rgba(15,23,42,.9);
-
-border-radius:30px;
-
-padding:30px;
-
-text-align:center;
-
-border:1px solid rgba(255,255,255,.1);
+    margin-bottom:25px;
 
 
 }
@@ -138,15 +217,150 @@ border:1px solid rgba(255,255,255,.1);
 
 
 
-.case-icon{
 
 
-font-size:90px;
 
-margin-bottom:20px;
+/* CASE */
+
+
+.case{
+
+
+    background:
+
+
+    linear-gradient(
+        145deg,
+        rgba(30,41,59,.9),
+        rgba(15,23,42,.8)
+    );
+
+
+    border-radius:32px;
+
+
+    padding:30px 20px;
+
+
+    text-align:center;
+
+
+    border:
+
+    1px solid rgba(255,255,255,.12);
+
+
+    box-shadow:
+
+    0 15px 40px rgba(0,0,0,.35);
 
 
 }
+
+
+
+.case-img{
+
+
+    width:120px;
+
+    height:120px;
+
+
+    margin:auto;
+
+
+    display:flex;
+
+
+    justify-content:center;
+
+
+    align-items:center;
+
+
+    font-size:80px;
+
+
+    animation:
+
+    floating 3s infinite;
+
+
+}
+
+
+
+
+
+@keyframes floating{
+
+
+0%{
+
+transform:translateY(0);
+
+}
+
+
+50%{
+
+transform:translateY(-12px);
+
+}
+
+
+100%{
+
+transform:translateY(0);
+
+}
+
+
+}
+
+
+
+
+
+
+.case h2{
+
+
+    margin-top:20px;
+
+
+    font-size:26px;
+
+
+}
+
+
+
+
+.case p{
+
+
+    color:#94a3b8;
+
+    margin-top:10px;
+
+
+}
+
+
+
+#caseTimer{
+
+
+    margin-top:15px;
+
+    color:#38bdf8;
+
+    font-weight:600;
+
+}
+
 
 
 
@@ -154,48 +368,43 @@ margin-bottom:20px;
 button{
 
 
-border:none;
-
-background:#2563eb;
-
-color:white;
-
-padding:15px 30px;
-
-border-radius:20px;
-
-font-size:16px;
-
-margin-top:20px;
-
-cursor:pointer;
+    margin-top:25px;
 
 
-}
+    width:90%;
 
 
+    padding:16px;
 
 
-
-#timer{
-
-
-color:#94a3b8;
-
-margin:15px;
-
-}
+    border:none;
 
 
+    border-radius:22px;
 
-#result{
+
+    color:white;
 
 
-margin-top:20px;
+    font-size:18px;
 
-font-size:22px;
 
-color:#facc15;
+    font-weight:700;
+
+
+    cursor:pointer;
+
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #7c3aed
+    );
+
+
+    transition:.2s;
 
 
 }
@@ -204,18 +413,10 @@ color:#facc15;
 
 
 
+button:active{
 
 
-.reward-container{
-
-
-display:flex;
-
-gap:15px;
-
-overflow-x:auto;
-
-padding-top:20px;
+    transform:scale(.95);
 
 
 }
@@ -223,26 +424,20 @@ padding-top:20px;
 
 
 
-.reward{
+
+#caseResult{
 
 
-min-width:140px;
+    margin-top:25px;
 
-height:100px;
 
-background:#172554;
+    color:#facc15;
 
-border-radius:20px;
 
-display:flex;
+    font-size:22px;
 
-align-items:center;
 
-justify-content:center;
-
-text-align:center;
-
-font-size:14px;
+    font-weight:700;
 
 
 }
@@ -250,54 +445,96 @@ font-size:14px;
 
 
 
-.rare{
 
-border:1px solid purple;
+
+
+
+/* CARDS */
+
+
+.card{
+
+
+    background:
+
+    rgba(15,23,42,.85);
+
+
+    border-radius:25px;
+
+
+    padding:25px;
+
+
+    border:
+
+    1px solid rgba(255,255,255,.1);
+
+
+    font-size:18px;
+
 
 }
 
 
 
-.nft{
-
-border:1px solid gold;
-
-}
 
 
 
 
-
+/* BOTTOM MENU */
 
 
 nav{
 
 
-position:fixed;
-
-bottom:0;
-
-left:0;
-
-width:100%;
-
-height:90px;
+    height:95px;
 
 
-background:#0f172a;
+    position:fixed;
 
 
-display:flex;
-
-justify-content:space-around;
-
-align-items:center;
+    bottom:0;
 
 
-border-radius:30px 30px 0 0;
+    left:0;
+
+
+    width:100%;
+
+
+
+    background:
+
+    rgba(15,23,42,.85);
+
+
+    backdrop-filter:
+
+    blur(20px);
+
+
+    border-radius:
+
+    35px 35px 0 0;
+
+
+    display:flex;
+
+
+    justify-content:space-around;
+
+
+    align-items:center;
+
+
+    border-top:
+
+    1px solid rgba(255,255,255,.1);
 
 
 }
+
 
 
 
@@ -306,17 +543,28 @@ border-radius:30px 30px 0 0;
 nav button{
 
 
-background:none;
+    width:auto;
 
-margin:0;
 
-padding:10px;
+    margin:0;
 
-display:flex;
 
-flex-direction:column;
+    padding:8px;
 
-font-size:25px;
+
+    background:none;
+
+
+    font-size:30px;
+
+
+    display:flex;
+
+
+    flex-direction:column;
+
+
+    gap:5px;
 
 
 }
@@ -324,11 +572,74 @@ font-size:25px;
 
 
 
+
 nav span{
 
-font-size:12px;
 
-color:#94a3b8;
+    font-size:12px;
+
+
+    color:#94a3b8;
+
+
+}
+
+
+
+
+
+nav button:hover span{
+
+
+    color:white;
+
+
+}
+
+
+
+
+
+
+/* SCROLL */
+
+
+::-webkit-scrollbar{
+
+width:0;
+
+}
+
+
+
+
+
+/* MOBILE */
+
+
+@media(max-width:600px){
+
+
+.title{
+
+font-size:20px;
+
+}
+
+
+
+h1{
+
+font-size:27px;
+
+}
+
+
+.case{
+
+padding:25px 15px;
+
+}
 
 
 }

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
 
 <meta charset="UTF-8">
@@ -21,14 +20,15 @@
 
 <header>
 
-<div class="logo">
+<div class="title">
 🐼 Panda Stars
 </div>
 
 
-<div class="balance">
+<div class="stars">
 ⭐ <span id="balance">100</span>
 </div>
+
 
 </header>
 
@@ -36,26 +36,25 @@
 
 
 
-<main>
+<div class="content">
 
 
-<section id="cases" class="screen active">
+
+<section id="home" class="page active">
 
 
 <h1>
-🎁 Бесплатный кейс
+🎁 Кейсы
 </h1>
 
 
 
+<div class="case">
 
-<div class="case-box">
 
-
-<div class="case-icon">
+<div class="case-img">
 🎁
 </div>
-
 
 
 <h2>
@@ -63,103 +62,27 @@
 </h2>
 
 
-
-<p id="timer">
-
-Доступен сейчас
-
+<p>
+Открывай раз в 24 часа
 </p>
 
 
+<div id="caseTimer">
+Доступен сейчас
+</div>
 
-<button id="openButton" onclick="openCase()">
 
-Открыть кейс
 
+<button onclick="openCase()">
+Открыть
 </button>
 
 
 
-<div id="result">
-
-</div>
-
+<div id="caseResult"></div>
 
 
 </div>
-
-
-
-
-
-
-
-
-<div class="rewards">
-
-
-<h2>
-Награды
-</h2>
-
-
-
-<div class="reward-container">
-
-
-<div class="reward">
-⭐⭐
-<br>
-2 Stars
-</div>
-
-
-<div class="reward">
-⭐⭐⭐
-<br>
-3 Stars
-</div>
-
-
-<div class="reward">
-⭐
-<br>
-1 Star
-</div>
-
-
-<div class="reward">
-⭐⭐⭐⭐⭐
-<br>
-5 Stars
-</div>
-
-
-<div class="reward">
-⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐
-<br>
-11 Stars
-</div>
-
-
-<div class="reward rare">
-⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐
-<br>
-17 Stars
-</div>
-
-
-<div class="reward nft">
-🎁
-<br>
-Telegram NFT
-</div>
-
-
-</div>
-
-</div>
-
 
 
 </section>
@@ -171,7 +94,7 @@ Telegram NFT
 
 
 
-<section id="games" class="screen">
+<section id="games" class="page">
 
 
 <h1>
@@ -179,9 +102,13 @@ Telegram NFT
 </h1>
 
 
-<div class="empty">
+<div class="card">
 
-Скоро появятся игры
+💣 Минное поле
+
+<br>
+
+Скоро
 
 </div>
 
@@ -194,7 +121,8 @@ Telegram NFT
 
 
 
-<section id="profile" class="screen">
+
+<section id="profile" class="page">
 
 
 <h1>
@@ -202,25 +130,30 @@ Telegram NFT
 </h1>
 
 
+<div class="card">
 
-<div class="profile">
 
-
-<p>
 Баланс:
+
+<br>
+
 ⭐ <span id="profileBalance">
 100
 </span>
-</p>
 
 
 
-<p>
+<br><br>
+
+
 Открыто кейсов:
+
+<br>
+
+
 <span id="opened">
 0
 </span>
-</p>
 
 
 </div>
@@ -230,10 +163,7 @@ Telegram NFT
 
 
 
-
-</main>
-
-
+</div>
 
 
 
@@ -243,39 +173,50 @@ Telegram NFT
 <nav>
 
 
-<button onclick="changeScreen('cases')">
+<button onclick="openPage('home')">
 
 🎁
+
 <span>
 Кейсы
 </span>
 
+
 </button>
 
 
 
-<button onclick="changeScreen('games')">
+<button onclick="openPage('games')">
 
 🎮
+
 <span>
 Игры
 </span>
 
+
 </button>
 
 
 
-<button onclick="changeScreen('profile')">
+
+<button onclick="openPage('profile')">
 
 👤
+
 <span>
 Профиль
 </span>
 
+
 </button>
 
 
+
 </nav>
+
+
+
 
 
 
@@ -287,5 +228,4 @@ Telegram NFT
 
 
 </body>
-
 </html>
