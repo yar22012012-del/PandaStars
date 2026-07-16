@@ -67,7 +67,7 @@
 
     <div id="gamesPage" class="page active">
 
-        <div class="game-card free">
+        <div class="game-card free" id="freeCaseCard"></div>
 
             <div>
 
@@ -216,7 +216,45 @@
     </button>
 
 </div>
+<!-- ========================= -->
+<!-- Бесплатный кейс -->
+<!-- ========================= -->
 
+<div id="caseModal" class="case-modal">
+
+    <div class="case-box">
+
+        <h2>🎁 Бесплатный кейс</h2>
+
+        <p id="caseTimer">
+
+            Бесплатно каждые 24 часа
+
+        </p>
+
+        <div class="roulette-wrapper">
+
+            <div class="pointer"></div>
+
+            <div id="roulette" class="roulette"></div>
+
+        </div>
+
+        <button id="openFreeCase">
+
+            Открыть
+
+        </button>
+
+        <button id="closeCase">
+
+            Закрыть
+
+        </button>
+
+    </div>
+
+</div>
 <script src="script.js"></script>
 
 </body>
