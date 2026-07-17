@@ -54,6 +54,8 @@ const caseMessage = document.getElementById('case-message') || document.createEl
 // Spinner elements
 const spinnerWrap = document.getElementById('spinnerWrap');
 const spinnerList = document.getElementById('spinnerList');
+const settingsBtn = document.getElementById('settingsBtn');
+const prizesBtn = document.getElementById('prizesBtn');
 
 function pad(v){ return v.toString().padStart(2,'0'); }
 
@@ -98,6 +100,8 @@ function hideOverlay(){ if(!overlay) return; overlay.classList.add('hidden'); if
 
 if(freeCard) freeCard.addEventListener('click', showOverlay);
 if(closeOverlay) closeOverlay.addEventListener('click', hideOverlay);
+if(settingsBtn) settingsBtn.addEventListener('click', ()=> alert('Настройки пока не готовы.'));
+if(prizesBtn) prizesBtn.addEventListener('click', ()=> alert('Призы пока не готовы.'));
 
 // Spinner / prizes
 const PRIZES = [
@@ -134,7 +138,7 @@ function stopAutoScroll(){ if(slowInterval){ clearInterval(slowInterval); slowIn
 
 function pickPrizeIndex(){ const total = PRIZES.reduce((s,p)=>s+p.weight,0); let rnd = Math.random()*total; for(let i=0;i<PRIZES.length;i++){ rnd -= PRIZES[i].weight; if(rnd<=0) return i; } return PRIZES.length-1; }
 
-function startSpinner(){ if(!spinnerWrap || !spinnerList) return; if(!spinnerList.children.length) prepareSpinner(); spinnerWrap.classList.remove('hidden'); const el = spinnerList.querySelector('.spin-item'); if(el) itemHeight = el.getBoundingClientRect().height || 76; totalItems = PRIZES.length*REPEAT; totalHeight = itemHeight * totalItems; const startIndex = Math.floor(totalItems / 2); currentOffset = startIndex * itemHeight; spinnerList.style.transition='none'; spinnerList.style.transform = `translateY(-${currentOffset}px)`; startAutoScroll(); openCaseBtn.disabled=true; openCaseBtn.textContent='Кручу...';
+function startSpinner(){ if(!spinnerWrap || !spinnerList) return; if(!spinnerList.children.length) prepareSpinner(); spinnerWrap.classList.remove('hidden'); const el = spinnerList.querySelector('.spin-item'); if(el) itemHeight = el.getBoundingClientRect().height || 60; totalItems = PRIZES.length*REPEAT; totalHeight = itemHeight * totalItems; const startIndex = Math.floor(totalItems / 2); currentOffset = startIndex * itemHeight; spinnerList.style.transition='none'; spinnerList.style.transform = `translateY(-${currentOffset}px)`; startAutoScroll(); openCaseBtn.disabled=true; openCaseBtn.textContent='Кручу...';
     setTimeout(()=>{
         stopAutoScroll();
         const base = pickPrizeIndex();

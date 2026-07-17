@@ -224,7 +224,10 @@
 <!-- Оверлей для бесплатного кейса -->
 <div id="freeCaseOverlay" class="overlay hidden">
     <div class="free-case-modal">
-        <div class="modal-top-icon">⌚</div>
+        <div class="modal-header-row">
+            <span class="status-pill">LIVE</span>
+            <span class="status-info">⭐ 2 050</span>
+        </div>
         <div class="badges">
             <span class="badge reward">Награда: до 4 515 ⭐</span>
             <span class="badge period">Раз в 1 день</span>
@@ -232,17 +235,19 @@
         <h2 class="hero-title">Откройте ежедневный кейс</h2>
         <p id="case-message" class="hero-sub">Откройте кейс, чтобы выиграть NFT‑подарок или звезды</p>
         <div id="case-countdown" class="countdown"></div>
-        <button id="openCaseBtn" class="big-action">Открыть бесплатно</button>
-        <!-- Spinner area (hidden until user starts) -->
-        <div id="spinnerWrap" class="spinner-wrap hidden">
-            <button class="arrow left" id="leftArrow">‹</button>
+        <div id="spinnerWrap" class="spinner-wrap">
             <div class="spinner-viewport">
                 <div class="spinner-list" id="spinnerList">
                     <!-- items injected by script -->
                 </div>
+                <div class="spinner-center-mask"></div>
             </div>
-            <button class="arrow right" id="rightArrow">›</button>
         </div>
+        <div class="modal-action-row">
+            <button id="settingsBtn" class="small-action">Настройки</button>
+            <button id="prizesBtn" class="small-action">Призы</button>
+        </div>
+        <button id="openCaseBtn" class="big-action">Открыть</button>
         <button id="closeOverlay" class="close-link">Закрыть</button>
     </div>
 </div>
