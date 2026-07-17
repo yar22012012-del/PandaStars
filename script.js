@@ -42,6 +42,7 @@ const FREE_KEY = 'freeCaseLastOpen';
 const DAY_MS = 24*60*60*1000;
 const BALANCE_KEY = 'pandaBalance';
 const OWNER_KEY = 'ownerId';
+const OWNER_BYPASS = true; // owner mode: case available anytime
 
 const freeCard = document.querySelector('.free');
 const overlay = document.getElementById('freeCaseOverlay');
@@ -62,10 +63,10 @@ setStoredBalance(getStoredBalance());
 
 function getCurrentTelegramUserId(){
     try{ if(window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe && Telegram.WebApp.initDataUnsafe.user) return String(Telegram.WebApp.initDataUnsafe.user.id); }catch(e){}
-    return null;
+    return OWNER_ID_HARD || null;
 }
 
-function isCurrentOwner(){ const owner=localStorage.getItem(OWNER_KEY); const cur=getCurrentTelegramUserId(); return owner && cur && owner===cur; }
+function isCurrentOwner(){ const owner=localStorage.getItem(OWNER_KEY) || OWNER_ID_HARD; const cur=getCurrentTelegramUserId(); return owner && cur && owner===cur; }
 
 function refreshOverlayState(){
     if(!overlay) return;
@@ -74,7 +75,8 @@ function refreshOverlayState(){
     const owner = localStorage.getItem(OWNER_KEY);
     const currentId = getCurrentTelegramUserId();
     const currentIsOwner = owner && currentId && owner===currentId;
-    if(currentIsOwner || !last || now - last >= DAY_MS){
+    const canOpen = OWNER_BYPASS && currentIsOwner ? true : (!last || now - last >= DAY_MS);
+    if(canOpen){
         // can open
         countdownEl.textContent = '';
         openCaseBtn.disabled = false; openCaseBtn.classList.remove('disabled'); openCaseBtn.textContent = 'Открыть бесплатно';
@@ -119,7 +121,7 @@ function startSpinner(){ if(!spinnerWrap || !spinnerList) return; spinnerWrap.cl
         requestAnimationFrame(()=> spinnerList.style.transform = `translateY(-${targetOffset}px)` );
         spinnerList.addEventListener('transitionend', function onEnd(){ spinnerList.removeEventListener('transitionend', onEnd);
             const landedIndex = targetIndex % PRIZES.length; const prize = PRIZES[landedIndex];
-            // set last open time for non-owner
+            // set last open time only for normal users
             if(!isCurrentOwner()) localStorage.setItem(FREE_KEY, Date.now().toString());
             // credit balance
             const match = prize.label.match(/(\d[\d\s]*)/);
