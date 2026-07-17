@@ -18,9 +18,24 @@ function openPage(page){
     if(page==='games') buttons[0].classList.add('active');
     if(page==='shop') buttons[1].classList.add('active');
     if(page==='profile') buttons[2].classList.add('active');
+    try{ console.log('[openPage] switched to', page); }catch(e){}
 }
 // expose to global so inline onclick handlers work
 window.openPage = openPage;
+
+// Attach fallback event listeners to bottom menu buttons (in case inline onclick fails)
+try{
+    if(buttons && buttons.length>=3){
+        const mapping = ['games','shop','profile'];
+        buttons.forEach((b,i)=>{
+            // avoid double-binding if already using inline onclick
+            b.addEventListener('click', (ev)=>{
+                ev.stopPropagation();
+                openPage(mapping[i]);
+            });
+        });
+    }
+}catch(e){ console.error('bottom menu bind error', e); }
 
 // Free case overlay + spinner
 const FREE_KEY = 'freeCaseLastOpen';
