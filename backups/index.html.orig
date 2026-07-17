@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Panda Stars</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="stars"></div>
+
+<!-- Верхняя панель -->
+
+<div class="header">
+
+    <div class="logo">
+
+        🐼 Panda Stars
+
+    </div>
+
+    <div class="balance">
+
+        ⭐ <span id="balance">0</span>
+
+    </div>
+
+</div>
+
+<!-- Лента выигрышей -->
+
+<div class="wins">
+
+    <div class="wins-title">
+
+        🏆 ТОП ВЫИГРЫШИ
+
+    </div>
+
+    <div class="wins-marquee">
+
+        <span>
+
+            Alex выиграл ⭐100 &nbsp;&nbsp;&nbsp;
+            Max выиграл ⭐50 &nbsp;&nbsp;&nbsp;
+            Ivan выиграл ⭐25 &nbsp;&nbsp;&nbsp;
+            Panda выиграл ⭐18 &nbsp;&nbsp;&nbsp;
+            Kirill выиграл ⭐72
+
+        </span>
+
+    </div>
+
+</div>
+
+<!-- Контент -->
+
+<div id="content">
+
+    <div id="gamesPage" class="page active">
+
+        <div class="game-card free">
+
+            <div>
+
+                <h2>🎁 Бесплатный кейс</h2>
+
+                <p>
+
+                    Бесплатное открытие
+
+                    каждые 24 часа
+
+                </p>
+
+            </div>
+
+            <div class="icon">
+
+                📦
+
+            </div>
+
+        </div>
+
+        <div class="game-card upgrade">
+
+            <div>
+
+                <h2>📈 Апгрейдер</h2>
+
+                <p>
+
+                    Увеличивайте свои Stars
+
+                    с шансом на успех
+
+                </p>
+
+            </div>
+
+            <div class="icon">
+
+                🚀
+
+            </div>
+
+        </div>
+
+        <div class="game-card crash">
+
+            <div>
+
+                <h2>💥 Краш</h2>
+
+                <p>
+
+                    Заберите Stars
+
+                    до падения множителя
+
+                </p>
+
+            </div>
+
+            <div class="icon">
+
+                📈
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="shopPage" class="page">
+
+        <h2>
+
+            🛍 Магазин
+
+        </h2>
+
+        <p>
+
+            Скоро...
+
+        </p>
+
+    </div>
+
+    <div id="profilePage" class="page">
+
+        <h2>
+
+            👤 Профиль
+
+        </h2>
+
+        <p>
+
+            Скоро...
+
+        </p>
+
+    </div>
+
+</div>
+
+<!-- Нижнее меню -->
+
+<div class="bottom-menu">
+
+    <button class="active" onclick="openPage('games')">
+
+        🎮
+
+        <span>
+
+            Игры
+
+        </span>
+
+    </button>
+
+    <button onclick="openPage('shop')">
+
+        🛍
+
+        <span>
+
+            Магазин
+
+        </span>
+
+    </button>
+
+    <button onclick="openPage('profile')">
+
+        👤
+
+        <span>
+
+            Профиль
+
+        </span>
+
+    </button>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>

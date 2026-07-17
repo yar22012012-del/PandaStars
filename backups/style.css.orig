@@ -1,0 +1,338 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+n    background:#050505;
+
+n    color:white;
+
+n    font-family:Arial,Helvetica,sans-serif;
+
+n    overflow:hidden;
+
+n}
+
+/* фон */
+
+.stars{
+
+n    position:fixed;
+
+n    inset:0;
+
+n    background-image:
+    radial-gradient(white 1px,transparent 1px);
+
+n    background-size:35px 35px;
+
+n    opacity:.35;
+
+n    z-index:-1;
+
+n}
+
+/* верх */
+
+.header{
+
+n    position:fixed;
+
+n    top:0;
+
+n    left:0;
+
+n    width:100%;
+
+n    height:65px;
+
+n    display:flex;
+
+n    justify-content:space-between;
+
+n    align-items:center;
+
+n    padding:18px;
+
+n    background:rgba(15,15,15,.92);
+
+n    backdrop-filter:blur(15px);
+
+n    border-bottom:1px solid rgba(255,255,255,.08);
+
+n    z-index:100;
+
+n}
+
+.logo{
+
+n    font-size:22px;
+
+n    font-weight:bold;
+
+n}
+
+.balance{
+
+n    background:#1e293b;
+
+n    padding:10px 18px;
+
+n    border-radius:18px;
+
+n    color:#ffd54a;
+
+n    font-weight:bold;
+
+n    box-shadow:0 0 20px rgba(255,215,0,.18);
+
+n}
+
+/* топ */
+
+.wins{
+
+n    position:fixed;
+
+n    top:65px;
+
+n    width:100%;
+
+n    background:#101010;
+
+    border-bottom:1px solid rgba(255,255,255,.06);
+
+n    padding:10px 0;
+
+    overflow:hidden;
+
+nb}
+
+.wins-title{
+
+n    padding-left:15px;
+
+n    font-size:13px;
+
+n    color:#7fb4ff;
+
+n    margin-bottom:6px;
+
+n}
+
+.wins-marquee{
+
+n    overflow:hidden;
+
+n    white-space:nowrap;
+
+n}
+
+.wins-marquee span{
+
+n    display:inline-block;
+
+n    padding-left:100%;
+
+n    animation:scroll 18s linear infinite;
+
+n    color:#d8d8d8;
+
+n}
+
+@keyframes scroll{
+
+n    from{
+
+n        transform:translateX(0);
+
+n    }
+
+n    to{
+
+n        transform:translateX(-100%);
+
+n    }
+
+}
+
+/* страницы */
+
+#content{
+
+n    position:fixed;
+
+n    top:120px;
+
+n    bottom:90px;
+
+n    left:0;
+
+n    width:100%;
+
+n    overflow-y:auto;
+
+n    padding:20px;
+
+n}
+
+.page{
+
+n    display:none;
+
+n}
+
+.page.active{
+
+n    display:block;
+
+n}
+
+/* карточки */
+
+.game-card{
+
+n    width:100%;
+
+n    border-radius:26px;
+
+n    padding:22px;
+
+n    margin-bottom:18px;
+
+n    display:flex;
+
+n    justify-content:space-between;
+
+n    align-items:center;
+
+n    cursor:pointer;
+
+n    transition:.25s;
+
+n    border:1px solid rgba(255,255,255,.08);
+
+n    background:#171717;
+
+n}
+
+.game-card:hover{
+
+n    transform:translateY(-3px);
+
+n}
+
+.game-card:active{
+
+n    transform:scale(.97);
+
+n}
+
+.game-card h2{
+
+n    margin-bottom:8px;
+
+n    font-size:22px;
+
+n}
+
+.game-card p{
+
+n    color:#cfcfcf;
+
+n    line-height:24px;
+
+n    font-size:15px;
+
+n}
+
+.icon{
+
+n    font-size:58px;
+
+n}
+
+/* цвета */
+
+.free{
+
+n    box-shadow:0 0 30px rgba(170,0,255,.18);
+
+n}
+
+.upgrade{
+
+n    box-shadow:0 0 30px rgba(0,255,140,.15);
+
+n}
+
+.crash{
+
+n    box-shadow:0 0 30px rgba(255,120,0,.18);
+
+n}
+
+/* меню */
+
+.bottom-menu{
+
+n    position:fixed;
+
+n    bottom:0;
+
+n    left:0;
+
+n    width:100%;
+
+n    height:82px;
+
+n    display:flex;
+
+n    justify-content:space-around;
+
+n    align-items:center;
+
+n    background:#111;
+
+n    border-top:1px solid rgba(255,255,255,.08);
+
+n}
+
+.bottom-menu button{
+
+n    background:none;
+
+n    border:none;
+
+    color:#9b9b9b;
+
+    display:flex;
+
+n    flex-direction:column;
+
+n    align-items:center;
+
+n    gap:5px;
+
+n    font-size:25px;
+
+n    transition:.25s;
+
+}
+
+.bottom-menu button span{
+
+n    font-size:12px;
+
+n}
+
+.bottom-menu button.active{
+
+n    color:#62a8ff;
+
+n    transform:translateY(-3px);
+
+}

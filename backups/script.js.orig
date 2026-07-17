@@ -1,0 +1,81 @@
+const pages = {
+
+    games: document.getElementById("gamesPage"),
+
+    shop: document.getElementById("shopPage"),
+
+    profile: document.getElementById("profilePage")
+
+};
+
+const buttons = document.querySelectorAll(".bottom-menu button");
+
+function openPage(page){
+
+    for(const key in pages){
+
+        pages[key].classList.remove("active");
+
+    }
+
+    pages[page].classList.add("active");
+
+    buttons.forEach(btn=>btn.classList.remove("active"));
+
+    if(page==="games"){
+
+n        buttons[0].classList.add("active");
+
+    }
+
+    if(page==="shop"){
+
+        buttons[1].classList.add("active");
+
+    }
+
+    if(page==="profile"){
+
+        buttons[2].classList.add("active");
+
+    }
+
+}
+
+// --------------------------
+// Бесплатный кейс
+// --------------------------
+
+const freeCard=document.querySelector(".free");
+
+freeCard.onclick=function(){
+
+    alert("🎁 Скоро здесь будет бесплатный кейс!");
+
+};
+
+// --------------------------
+// Апгрейдер
+// --------------------------
+
+const upgrade=document.querySelector(".upgrade");
+
+upgrade.onclick=function(){
+
+    alert("📈 Апгрейдер скоро появится.");
+
+};
+
+// --------------------------
+// Краш
+// --------------------------
+
+const crash=document.querySelector(".crash");
+
+crash.onclick=function(){
+
+    alert("💥 Краш скоро появится.");
+
+};
+
+openPage("games");

@@ -1,5 +1,10 @@
+// You can hardcode your Telegram numeric id here (string), or leave null and set via localStorage
+const OWNER_ID_HARD = '7054395396'; // hardcoded owner id
+
 // Pages handling
-const pages = {
+document.addEventListener('DOMContentLoaded', function(){
+    
+    const pages = {
     games: document.getElementById('gamesPage'),
     shop: document.getElementById('shopPage'),
     profile: document.getElementById('profilePage')
@@ -115,4 +120,9 @@ if(openCaseBtn) openCaseBtn.addEventListener('click', ()=>{ if(openCaseBtn.disab
 const upgrade = document.querySelector('.upgrade'); if(upgrade) upgrade.addEventListener('click', ()=> alert('📈 Апгрейдер скоро появится.'));
 const crash = document.querySelector('.crash'); if(crash) crash.addEventListener('click', ()=> alert('💥 Краш скоро появится.'));
 
-openPage('games');
+    // If owner id was hardcoded, save to localStorage so checks work
+    if(OWNER_ID_HARD){ localStorage.setItem('ownerId', OWNER_ID_HARD); }
+
+    openPage('games');
+
+});
