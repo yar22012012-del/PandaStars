@@ -103,6 +103,42 @@ if(closeOverlay) closeOverlay.addEventListener('click', hideOverlay);
 if(settingsBtn) settingsBtn.addEventListener('click', ()=> alert('Настройки пока не готовы.'));
 if(prizesBtn) prizesBtn.addEventListener('click', ()=> alert('Призы пока не готовы.'));
 
+// Live feed data
+const LIVE_FEED_CONTAINER_ID = 'liveFeedList';
+const LIVE_FEED_MESSAGES = [
+    {name:'Alex', prize:'0.3 ⭐'},
+    {name:'Max', prize:'0.7 ⭐'},
+    {name:'Ivan', prize:'1 ⭐'},
+    {name:'Panda', prize:'2 ⭐'},
+    {name:'Kirill', prize:'4 ⭐'},
+    {name:'Lena', prize:'7 ⭐'},
+    {name:'Oleg', prize:'8.1 ⭐'},
+    {name:'Masha', prize:'1286 ⭐'},
+    {name:'Dima', prize:'1634 ⭐'},
+    {name:'Vika', prize:'6528 ⭐'}
+];
+
+function addLiveFeedItem(user, prize){
+    const container = document.getElementById(LIVE_FEED_CONTAINER_ID);
+    if(!container) return;
+    const item = document.createElement('div');
+    item.className = 'wins-item';
+    item.innerHTML = `<span class="wins-user">${user}</span> открыл кейс и выиграл <span class="wins-prize">${prize}</span>`;
+    container.prepend(item);
+    if(container.childNodes.length > 6){
+        container.removeChild(container.lastChild);
+    }
+}
+
+function startLiveFeed(){
+    let i = 0;
+    setInterval(()=>{
+        const msg = LIVE_FEED_MESSAGES[i % LIVE_FEED_MESSAGES.length];
+        addLiveFeedItem(msg.name, msg.prize);
+        i++;
+    }, 2500);
+}
+
 // Spinner / prizes
 const PRIZES = [
     {label:'0.3 ⭐', weight:28},
@@ -152,8 +188,9 @@ function startSpinner(){ if(!spinnerWrap || !spinnerList) return; if(!spinnerLis
             if(!isCurrentOwner()) localStorage.setItem(FREE_KEY, Date.now().toString());
             const match = prize.label.match(/(\d+(?:[.,]\d+)?)/);
             if(match){ const num = parseFloat(match[1].replace(',', '.')); if(!isNaN(num) && num>0){ setStoredBalance(getStoredBalance()+num); } }
-            openCaseBtn.textContent = `Вы выиграли ${prize.label}!`;
+                    openCaseBtn.textContent = `Вы выиграли ${prize.label}!`;
             caseMessage.textContent = 'Поздравляем!';
+            addLiveFeedItem('Вы', prize.label);
             setTimeout(()=>{ spinnerWrap.classList.add('hidden'); refreshOverlayState(); },1400);
         });
     },950);
@@ -169,5 +206,6 @@ const crash = document.querySelector('.crash'); if(crash) crash.addEventListener
     if(OWNER_ID_HARD){ localStorage.setItem('ownerId', OWNER_ID_HARD); }
 
     openPage('games');
+    startLiveFeed();
 
 });

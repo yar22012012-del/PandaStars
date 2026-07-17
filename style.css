@@ -123,40 +123,40 @@ body{
 
 }
 
-.wins-marquee{
-
-    overflow:hidden;
-
-    white-space:nowrap;
-
+.wins-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    padding:12px 10px 10px;
 }
 
-.wins-marquee span{
-
-    display:inline-block;
-
-    padding-left:100%;
-
-    animation:scroll 18s linear infinite;
-
-    color:#d8d8d8;
-
+.wins-item{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 12px;
+    border-radius:16px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);
+    color:#f4f4f4;
+    font-size:13px;
+    min-width:160px;
+    max-width:100%;
 }
 
-@keyframes scroll{
+.wins-item span{
+    display:inline-flex;
+    align-items:center;
+}
 
-    from{
+.wins-item .wins-user{
+    font-weight:700;
+    color:#fff;
+}
 
-        transform:translateX(0);
-
-    }
-
-    to{
-
-        transform:translateX(-100%);
-
-    }
-
+.wins-item .wins-prize{
+    color:#ffd54a;
+    font-weight:700;
 }
 
 /* страницы */
@@ -346,9 +346,6 @@ body{
     width:92%; max-width:520px; background:#151515; border-radius:16px; padding:22px; text-align:center; border:1px solid rgba(255,255,255,0.06);
 }
 .modal-top-icon{ font-size:34px; margin-bottom:8px; }
-.modal-header-row{ display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:14px; }
-.status-pill{ display:inline-flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; padding:6px 12px; border-radius:999px; background:#7f2bff; color:#fff; letter-spacing:.02em; }
-.status-info{ background:rgba(255,255,255,.08); color:#fff; padding:6px 12px; border-radius:999px; font-size:13px; }
 .badges{ display:flex; gap:8px; justify-content:center; margin-bottom:12px; }
 .badge{ padding:6px 12px; border-radius:18px; font-size:13px; }
 .badge.reward{ background:linear-gradient(90deg,#00c2ff,#7b33ff); color:#fff; font-weight:700; }
