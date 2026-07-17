@@ -19,6 +19,8 @@ function openPage(page){
     if(page==='shop') buttons[1].classList.add('active');
     if(page==='profile') buttons[2].classList.add('active');
 }
+// expose to global so inline onclick handlers work
+window.openPage = openPage;
 
 // Free case overlay + spinner
 const FREE_KEY = 'freeCaseLastOpen';
