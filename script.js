@@ -73,10 +73,11 @@ function refreshOverlayState(){
     const now = Date.now();
     if(!last || now - parseInt(last,10) >= DAY_MS){
         // Можно открыть
-        caseMessage.textContent = 'Бесплатное открытие доступно сейчас';
+        caseMessage.textContent = '';
         countdownEl.textContent = '';
         openCaseBtn.disabled = false;
-        openCaseBtn.textContent = 'Открыть кейс';
+        openCaseBtn.textContent = 'Открыть бесплатно';
+        openCaseBtn.classList.remove('disabled');
     } else {
         // Ждем
         openCaseBtn.disabled = true;
@@ -97,7 +98,8 @@ function updateCountdown(){
     const m = Math.floor((left % (1000*60*60)) / (1000*60));
     const s = Math.floor((left % (1000*60)) / 1000);
     countdownEl.textContent = `До следующего открытия осталось ${pad(h)}:${pad(m)}:${pad(s)}`;
-    caseMessage.textContent = 'Бесплатный кейс недоступен';
+    caseMessage.textContent = '';
+    openCaseBtn.classList.add('disabled');
 }
 
 function pad(v){ return v.toString().padStart(2,'0'); }
@@ -114,6 +116,7 @@ openCaseBtn.onclick = function(){
     // Показать короткое подтверждение
     openCaseBtn.disabled = true;
     openCaseBtn.textContent = 'Открыто! 🎉';
+    openCaseBtn.classList.add('disabled');
     caseMessage.textContent = 'Вы открыли кейс!';
     countdownEl.textContent = '';
     // Запустить обратный отсчёт

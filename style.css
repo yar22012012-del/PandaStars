@@ -357,27 +357,33 @@ body{
     border-radius:18px;
     padding:24px;
     text-align:center;
-    border:1px solid rgba(255,255,255,.06);
+    border:1px solid rgba(136, 29, 29, 0.06);
     box-shadow:0 8px 30px rgba(0,0,0,.6);
 }
 
-.free-case-modal h2{ margin-bottom:8px; }
-.free-case-modal p{ color:#cfcfcf; margin-bottom:12px; }
-.countdown{ color:#ffd54a; font-weight:bold; margin-bottom:12px; }
+.modal-top-icon{ font-size:36px; margin-bottom:6px; }
+.badges{ display:flex; gap:8px; justify-content:center; margin-bottom:10px; }
+.badge{ padding:6px 10px; border-radius:20px; font-size:13px; }
+.badge.reward{ background:#1db954; color:#07220d; font-weight:700; }
+.badge.period{ background:#2b2b2b; color:#d6d6d6; }
+.hero-title{ font-size:20px; margin:6px 0 6px; font-weight:700; }
+.hero-sub{ color:#bfbfbf; font-size:14px; margin-bottom:12px; }
+.countdown{ color:#ffd54a; font-weight:700; margin-bottom:12px; }
 
-.case-button{
-    background:linear-gradient(180deg,#ffd54a,#ffb400);
+.big-action{
+    width:100%;
+    background:#ffffff;
     color:#111;
     border:none;
-    padding:12px 18px;
-    border-radius:12px;
-    font-weight:bold;
-    font-size:16px;
+    padding:16px 20px;
+    border-radius:14px;
+    font-weight:700;
+    font-size:17px;
     cursor:pointer;
-    box-shadow:0 6px 18px rgba(255,181,0,.18);
+    box-shadow:0 6px 18px rgba(0,0,0,0.35);
 }
 
-.case-button:disabled{ opacity:.6; cursor:default; }
+.big-action.disabled{ opacity:0.6; cursor:default; }
 
 .close-link{
     margin-top:12px;
