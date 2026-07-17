@@ -69,11 +69,16 @@ function setStoredBalance(v){ localStorage.setItem(BALANCE_KEY, String(v)); cons
 setStoredBalance(getStoredBalance());
 
 function getCurrentTelegramUserId(){
-    try{ if(window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe && Telegram.WebApp.initDataUnsafe.user) return String(Telegram.WebApp.initDataUnsafe.user.id); }catch(e){}
-    return OWNER_ID_HARD || null;
+    try{
+        if(window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe && Telegram.WebApp.initDataUnsafe.user){
+            return String(Telegram.WebApp.initDataUnsafe.user.id);
+        }
+    }catch(e){ }
+    return null;
 }
 
-function isCurrentOwner(){ const owner=localStorage.getItem(OWNER_KEY) || OWNER_ID_HARD; const cur=getCurrentTelegramUserId(); return owner && cur && owner===cur; }
+function getStoredOwnerId(){ return localStorage.getItem(OWNER_KEY) || OWNER_ID_HARD; }
+function isCurrentOwner(){ const owner = getStoredOwnerId(); const cur = getCurrentTelegramUserId(); return owner && cur && owner === cur; }
 
 function isDemoMode(){ return localStorage.getItem(DEMO_KEY) === '1'; }
 
