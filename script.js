@@ -91,17 +91,41 @@ function refreshOverlayState(){
 
 function updateCountdown(){ const last=parseInt(localStorage.getItem(FREE_KEY)||'0',10); const left = DAY_MS - (Date.now()-last); if(left<=0){ refreshOverlayState(); return; } const h=Math.floor(left/3600000); const m=Math.floor((left%3600000)/60000); const s=Math.floor((left%60000)/1000); countdownEl.textContent = `До следующего открытия осталось ${pad(h)}:${pad(m)}:${pad(s)}`; }
 
-function showOverlay(){ if(!overlay) return; overlay.classList.remove('hidden'); refreshOverlayState(); }
-function hideOverlay(){ if(!overlay) return; overlay.classList.add('hidden'); if(window._caseCountdownTimer){ clearInterval(window._caseCountdownTimer); window._caseCountdownTimer=null; } }
+function prepareSpinner(){ if(!spinnerList) return; buildSpinner(); const el = spinnerList.querySelector('.spin-item'); if(el) itemHeight = el.getBoundingClientRect().height || 76; totalItems = PRIZES.length*REPEAT; totalHeight = itemHeight * totalItems; const startIndex = Math.floor(totalItems / 2); currentOffset = startIndex * itemHeight; spinnerList.style.transition = 'none'; spinnerList.style.transform = `translateY(-${currentOffset}px)`; }
+
+function showOverlay(){ if(!overlay) return; overlay.classList.remove('hidden'); refreshOverlayState(); prepareSpinner(); spinnerWrap.classList.remove('hidden'); startAutoScroll(); caseMessage.textContent = 'Откройте кейс, чтобы выиграть NFT‑подарок или звезды'; }
+function hideOverlay(){ if(!overlay) return; overlay.classList.add('hidden'); if(window._caseCountdownTimer){ clearInterval(window._caseCountdownTimer); window._caseCountdownTimer=null; } stopAutoScroll(); }
 
 if(freeCard) freeCard.addEventListener('click', showOverlay);
 if(closeOverlay) closeOverlay.addEventListener('click', hideOverlay);
 
 // Spinner / prizes
-const PRIZES = [ {label:'1 ⭐', weight:40},{label:'3 ⭐', weight:20},{label:'7 ⭐', weight:8},{label:'53 ⭐', weight:6},{label:'71 ⭐', weight:5},{label:'89 ⭐', weight:4},{label:'1252 ⭐', weight:1},{label:'0 ⭐', weight:16} ];
-const REPEAT = 25;
+const PRIZES = [
+    {label:'0.3 ⭐', weight:28},
+    {label:'0.7 ⭐', weight:26},
+    {label:'1 ⭐', weight:22},
+    {label:'2 ⭐', weight:18},
+    {label:'4 ⭐', weight:16},
+    {label:'7 ⭐', weight:4},
+    {label:'8.1 ⭐', weight:3},
+    {label:'1286 ⭐', weight:0.6},
+    {label:'1634 ⭐', weight:0.35},
+    {label:'6528 ⭐', weight:0.15}
+];
+const REPEAT = 30;
 
-function buildSpinner(){ if(!spinnerList) return; spinnerList.innerHTML=''; for(let r=0;r<REPEAT;r++){ for(const p of PRIZES){ const it=document.createElement('div'); it.className='spin-item'; it.textContent = p.label; spinnerList.appendChild(it); } } }
+function buildSpinner(){
+    if(!spinnerList) return;
+    spinnerList.innerHTML = '';
+    for(let r=0;r<REPEAT;r++){
+        for(const p of PRIZES){
+            const it = document.createElement('div');
+            it.className='spin-item';
+            it.textContent = p.label;
+            spinnerList.appendChild(it);
+        }
+    }
+}
 
 let itemHeight=76; let totalItems = PRIZES.length*REPEAT; let totalHeight = 0; let currentOffset=0; let slowInterval=null;
 
@@ -110,27 +134,25 @@ function stopAutoScroll(){ if(slowInterval){ clearInterval(slowInterval); slowIn
 
 function pickPrizeIndex(){ const total = PRIZES.reduce((s,p)=>s+p.weight,0); let rnd = Math.random()*total; for(let i=0;i<PRIZES.length;i++){ rnd -= PRIZES[i].weight; if(rnd<=0) return i; } return PRIZES.length-1; }
 
-function startSpinner(){ if(!spinnerWrap || !spinnerList) return; spinnerWrap.classList.remove('hidden'); buildSpinner(); const el = spinnerList.querySelector('.spin-item'); if(el) itemHeight = el.getBoundingClientRect().height || 76; totalItems = PRIZES.length*REPEAT; totalHeight = itemHeight * totalItems; currentOffset = Math.floor(totalHeight/4); spinnerList.style.transition='none'; spinnerList.style.transform = `translateY(-${currentOffset}px)`; startAutoScroll(); openCaseBtn.disabled=true; openCaseBtn.textContent='Кручу...';
+function startSpinner(){ if(!spinnerWrap || !spinnerList) return; if(!spinnerList.children.length) prepareSpinner(); spinnerWrap.classList.remove('hidden'); const el = spinnerList.querySelector('.spin-item'); if(el) itemHeight = el.getBoundingClientRect().height || 76; totalItems = PRIZES.length*REPEAT; totalHeight = itemHeight * totalItems; const startIndex = Math.floor(totalItems / 2); currentOffset = startIndex * itemHeight; spinnerList.style.transition='none'; spinnerList.style.transform = `translateY(-${currentOffset}px)`; startAutoScroll(); openCaseBtn.disabled=true; openCaseBtn.textContent='Кручу...';
     setTimeout(()=>{
         stopAutoScroll();
         const base = pickPrizeIndex();
         const cycles = 5 + Math.floor(Math.random()*6);
-        const targetIndex = cycles*PRIZES.length + base;
-        const targetOffset = currentOffset + targetIndex*itemHeight + (itemHeight/2);
+        const targetIndex = startIndex + cycles*PRIZES.length + base;
+        const targetOffset = targetIndex * itemHeight;
         spinnerList.style.transition = 'transform 3.8s cubic-bezier(.22,.9,.12,1)';
         requestAnimationFrame(()=> spinnerList.style.transform = `translateY(-${targetOffset}px)` );
         spinnerList.addEventListener('transitionend', function onEnd(){ spinnerList.removeEventListener('transitionend', onEnd);
             const landedIndex = targetIndex % PRIZES.length; const prize = PRIZES[landedIndex];
-            // set last open time only for normal users
             if(!isCurrentOwner()) localStorage.setItem(FREE_KEY, Date.now().toString());
-            // credit balance
-            const match = prize.label.match(/(\d[\d\s]*)/);
-            if(match){ const num = parseInt(match[1].replace(/\s+/g,''),10); if(!isNaN(num) && num>0){ setStoredBalance(getStoredBalance()+num); } }
+            const match = prize.label.match(/(\d+(?:[.,]\d+)?)/);
+            if(match){ const num = parseFloat(match[1].replace(',', '.')); if(!isNaN(num) && num>0){ setStoredBalance(getStoredBalance()+num); } }
             openCaseBtn.textContent = `Вы выиграли ${prize.label}!`;
             caseMessage.textContent = 'Поздравляем!';
             setTimeout(()=>{ spinnerWrap.classList.add('hidden'); refreshOverlayState(); },1400);
         });
-    },600);
+    },950);
 }
 
 if(openCaseBtn) openCaseBtn.addEventListener('click', ()=>{ if(openCaseBtn.disabled) return; startSpinner(); });
