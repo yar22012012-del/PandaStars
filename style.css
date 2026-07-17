@@ -393,3 +393,46 @@ body{
     padding:6px 8px;
     cursor:pointer;
 }
+
+/* Spinner styles */
+.spinner-wrap{
+    margin-top:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+}
+.spinner-wrap.hidden{ display:none; }
+.arrow{
+    background:linear-gradient(180deg,#2b2b2b,#1b1b1b);
+    color:#fff;
+    border:0;
+    width:44px;
+    height:44px;
+    border-radius:10px;
+    font-size:28px;
+}
+.spinner-viewport{
+    width:220px;
+    height:76px;
+    overflow:hidden;
+    border-radius:22px;
+    background:linear-gradient(180deg,#2b1f2b,#171519);
+    border:1px solid rgba(255,255,255,.04);
+    display:flex;
+    align-items:center;
+}
+.spinner-list{
+    display:flex;
+    flex-direction:column;
+    transform:translateY(0);
+}
+.spin-item{
+    height:76px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    font-size:20px;
+    color:#ffd54a;
+}

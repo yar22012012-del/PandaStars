@@ -9,7 +9,11 @@
 
     <title>Panda Stars</title>
 
-    <link rel="stylesheet" href="style.css">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <link rel="stylesheet" href="style.css?v=2">
 
 </head>
 
@@ -229,6 +233,16 @@
         <p class="hero-sub">Откройте кейс, чтобы выиграть NFT‑подарок или звезды</p>
         <div id="case-countdown" class="countdown"></div>
         <button id="openCaseBtn" class="big-action">Открыть бесплатно</button>
+        <!-- Spinner area (hidden until user starts) -->
+        <div id="spinnerWrap" class="spinner-wrap hidden">
+            <button class="arrow left" id="leftArrow">‹</button>
+            <div class="spinner-viewport">
+                <div class="spinner-list" id="spinnerList">
+                    <!-- items injected by script -->
+                </div>
+            </div>
+            <button class="arrow right" id="rightArrow">›</button>
+        </div>
         <button id="closeOverlay" class="close-link">Закрыть</button>
     </div>
 </div>
