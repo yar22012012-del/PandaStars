@@ -336,3 +336,54 @@ body{
     transform:translateY(-3px);
 
 }
+
+/* Оверлей бесплатного кейса */
+.overlay{
+    position:fixed;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:rgba(0,0,0,0.6);
+    z-index:200;
+}
+
+.overlay.hidden{ display:none; }
+
+.free-case-modal{
+    width:90%;
+    max-width:420px;
+    background:#151515;
+    border-radius:18px;
+    padding:24px;
+    text-align:center;
+    border:1px solid rgba(255,255,255,.06);
+    box-shadow:0 8px 30px rgba(0,0,0,.6);
+}
+
+.free-case-modal h2{ margin-bottom:8px; }
+.free-case-modal p{ color:#cfcfcf; margin-bottom:12px; }
+.countdown{ color:#ffd54a; font-weight:bold; margin-bottom:12px; }
+
+.case-button{
+    background:linear-gradient(180deg,#ffd54a,#ffb400);
+    color:#111;
+    border:none;
+    padding:12px 18px;
+    border-radius:12px;
+    font-weight:bold;
+    font-size:16px;
+    cursor:pointer;
+    box-shadow:0 6px 18px rgba(255,181,0,.18);
+}
+
+.case-button:disabled{ opacity:.6; cursor:default; }
+
+.close-link{
+    margin-top:12px;
+    background:none;
+    color:#9b9b9b;
+    border:0;
+    padding:6px 8px;
+    cursor:pointer;
+}
