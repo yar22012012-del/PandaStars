@@ -42,10 +42,12 @@ const FREE_KEY = 'freeCaseLastOpen';
 const DAY_MS = 24*60*60*1000;
 const BALANCE_KEY = 'pandaBalance';
 const OWNER_KEY = 'ownerId';
+const DEMO_KEY = 'demoMode';
 const OWNER_BYPASS = true; // owner mode: case available anytime
 
 const freeCard = document.querySelector('.free');
 const overlay = document.getElementById('freeCaseOverlay');
+const settingsOverlay = document.getElementById('settingsOverlay');
 const openCaseBtn = document.getElementById('openCaseBtn');
 const closeOverlay = document.getElementById('closeOverlay');
 const countdownEl = document.getElementById('case-countdown');
@@ -56,6 +58,9 @@ const spinnerWrap = document.getElementById('spinnerWrap');
 const spinnerList = document.getElementById('spinnerList');
 const settingsBtn = document.getElementById('settingsBtn');
 const prizesBtn = document.getElementById('prizesBtn');
+const settingsClose = document.getElementById('settingsClose');
+const settingsDone = document.getElementById('settingsDone');
+const demoToggle = document.getElementById('demoToggle');
 
 function pad(v){ return v.toString().padStart(2,'0'); }
 
@@ -70,6 +75,10 @@ function getCurrentTelegramUserId(){
 
 function isCurrentOwner(){ const owner=localStorage.getItem(OWNER_KEY) || OWNER_ID_HARD; const cur=getCurrentTelegramUserId(); return owner && cur && owner===cur; }
 
+function isDemoMode(){ return localStorage.getItem(DEMO_KEY) === '1'; }
+
+function setDemoMode(enabled){ localStorage.setItem(DEMO_KEY, enabled ? '1' : '0'); if(demoToggle) demoToggle.checked = enabled; }
+
 function refreshOverlayState(){
     if(!overlay) return;
     const last = parseInt(localStorage.getItem(FREE_KEY) || '0',10);
@@ -77,14 +86,19 @@ function refreshOverlayState(){
     const owner = localStorage.getItem(OWNER_KEY);
     const currentId = getCurrentTelegramUserId();
     const currentIsOwner = owner && currentId && owner===currentId;
-    const canOpen = OWNER_BYPASS && currentIsOwner ? true : (!last || now - last >= DAY_MS);
+    const demo = isDemoMode();
+    const canOpen = demo ? true : (OWNER_BYPASS && currentIsOwner ? true : (!last || now - last >= DAY_MS));
+
+    countdownEl.textContent = demo ? 'Демо включено: кейсы доступны сразу, но баланс не изменяется.' : '';
+
     if(canOpen){
-        // can open
-        countdownEl.textContent = '';
-        openCaseBtn.disabled = false; openCaseBtn.classList.remove('disabled'); openCaseBtn.textContent = 'Открыть бесплатно';
+        openCaseBtn.disabled = false;
+        openCaseBtn.classList.remove('disabled');
+        openCaseBtn.textContent = demo ? 'Открыть бесплатно (демо)' : 'Открыть бесплатно';
     } else {
-        // cooldown
-        openCaseBtn.disabled = true; openCaseBtn.classList.add('disabled');
+        openCaseBtn.disabled = true;
+        openCaseBtn.classList.add('disabled');
+        openCaseBtn.textContent = 'Открыть бесплатно';
         updateCountdown();
         if(window._caseCountdownTimer) clearInterval(window._caseCountdownTimer);
         window._caseCountdownTimer = setInterval(updateCountdown,1000);
@@ -100,23 +114,17 @@ function hideOverlay(){ if(!overlay) return; overlay.classList.add('hidden'); if
 
 if(freeCard) freeCard.addEventListener('click', showOverlay);
 if(closeOverlay) closeOverlay.addEventListener('click', hideOverlay);
-if(settingsBtn) settingsBtn.addEventListener('click', ()=> alert('Настройки пока не готовы.'));
+if(settingsBtn) settingsBtn.addEventListener('click', ()=>{
+    if(settingsOverlay) settingsOverlay.classList.remove('hidden');
+    if(demoToggle) demoToggle.checked = isDemoMode();
+});
+if(settingsClose) settingsClose.addEventListener('click', ()=>{ if(settingsOverlay) settingsOverlay.classList.add('hidden'); });
+if(settingsDone) settingsDone.addEventListener('click', ()=>{ if(settingsOverlay) settingsOverlay.classList.add('hidden'); });
+if(demoToggle) demoToggle.addEventListener('change', ()=>{ setDemoMode(demoToggle.checked); refreshOverlayState(); });
 if(prizesBtn) prizesBtn.addEventListener('click', ()=> alert('Призы пока не готовы.'));
 
 // Live feed data
 const LIVE_FEED_CONTAINER_ID = 'liveFeedList';
-const LIVE_FEED_MESSAGES = [
-    {name:'Alex', prize:'0.3 ⭐'},
-    {name:'Max', prize:'0.7 ⭐'},
-    {name:'Ivan', prize:'1 ⭐'},
-    {name:'Panda', prize:'2 ⭐'},
-    {name:'Kirill', prize:'4 ⭐'},
-    {name:'Lena', prize:'7 ⭐'},
-    {name:'Oleg', prize:'8.1 ⭐'},
-    {name:'Masha', prize:'1286 ⭐'},
-    {name:'Dima', prize:'1634 ⭐'},
-    {name:'Vika', prize:'6528 ⭐'}
-];
 
 function addLiveFeedItem(user, prize){
     const container = document.getElementById(LIVE_FEED_CONTAINER_ID);
@@ -130,27 +138,32 @@ function addLiveFeedItem(user, prize){
     }
 }
 
-function startLiveFeed(){
-    let i = 0;
-    setInterval(()=>{
-        const msg = LIVE_FEED_MESSAGES[i % LIVE_FEED_MESSAGES.length];
-        addLiveFeedItem(msg.name, msg.prize);
-        i++;
-    }, 2500);
-}
-
 // Spinner / prizes
 const PRIZES = [
-    {label:'0.3 ⭐', weight:28},
-    {label:'0.7 ⭐', weight:26},
-    {label:'1 ⭐', weight:22},
-    {label:'2 ⭐', weight:18},
-    {label:'4 ⭐', weight:16},
-    {label:'7 ⭐', weight:4},
-    {label:'8.1 ⭐', weight:3},
-    {label:'1286 ⭐', weight:0.6},
-    {label:'1634 ⭐', weight:0.35},
-    {label:'6528 ⭐', weight:0.15}
+    {label:'0.5 ⭐', weight:28},
+    {label:'1.2 ⭐', weight:26},
+    {label:'2 ⭐', weight:24},
+    {label:'2.7 ⭐', weight:22},
+    {label:'3 ⭐', weight:20},
+    {label:'4 ⭐', weight:18},
+    {label:'5 ⭐', weight:16},
+    {label:'6.7 ⭐', weight:14},
+    {label:'8.2 ⭐', weight:12},
+    {label:'9 ⭐', weight:10},
+    {label:'12 ⭐', weight:5},
+    {label:'19 ⭐', weight:4},
+    {label:'23 ⭐', weight:3},
+    {label:'29 ⭐', weight:2.5},
+    {label:'31 ⭐', weight:2},
+    {label:'34 ⭐', weight:1.8},
+    {label:'46 ⭐', weight:1.4},
+    {label:'52 ⭐', weight:1.2},
+    {label:'69 ⭐', weight:1},
+    {label:'192 ⭐', weight:0.8},
+    {label:'408 ⭐', weight:0.6},
+    {label:'457 ⭐', weight:0.5},
+    {label:'1485 ⭐', weight:0.25},
+    {label:'2039 ⭐', weight:0.15}
 ];
 const REPEAT = 30;
 
@@ -172,7 +185,22 @@ let itemHeight=76; let totalItems = PRIZES.length*REPEAT; let totalHeight = 0; l
 function startAutoScroll(){ stopAutoScroll(); slowInterval = setInterval(()=>{ currentOffset += 0.5; if(currentOffset > totalHeight) currentOffset = currentOffset - Math.floor(currentOffset/totalHeight)*totalHeight; if(spinnerList) spinnerList.style.transform = `translateY(-${currentOffset}px)`; },16); }
 function stopAutoScroll(){ if(slowInterval){ clearInterval(slowInterval); slowInterval=null; } }
 
-function pickPrizeIndex(){ const total = PRIZES.reduce((s,p)=>s+p.weight,0); let rnd = Math.random()*total; for(let i=0;i<PRIZES.length;i++){ rnd -= PRIZES[i].weight; if(rnd<=0) return i; } return PRIZES.length-1; }
+function getPrizeWeights(){ const demo = isDemoMode(); return PRIZES.map((p)=>{
+        let weight = p.weight;
+        if(demo){
+            const value = parseFloat(p.label.replace(',', '.')) || 0;
+            if(value >= 408) weight *= 4;
+            else if(value >= 192) weight *= 3;
+            else if(value >= 69) weight *= 2.2;
+            else if(value >= 46) weight *= 1.6;
+            else if(value >= 23) weight *= 1.3;
+            else weight *= 0.9;
+        }
+        return weight;
+    });
+}
+
+function pickPrizeIndex(){ const weights = getPrizeWeights(); const total = weights.reduce((s,w)=>s+w,0); let rnd = Math.random()*total; for(let i=0;i<PRIZES.length;i++){ rnd -= weights[i]; if(rnd<=0) return i; } return PRIZES.length-1; }
 
 function startSpinner(){ if(!spinnerWrap || !spinnerList) return; if(!spinnerList.children.length) prepareSpinner(); spinnerWrap.classList.remove('hidden'); const el = spinnerList.querySelector('.spin-item'); if(el) itemHeight = el.getBoundingClientRect().height || 60; totalItems = PRIZES.length*REPEAT; totalHeight = itemHeight * totalItems; const startIndex = Math.floor(totalItems / 2); currentOffset = startIndex * itemHeight; spinnerList.style.transition='none'; spinnerList.style.transform = `translateY(-${currentOffset}px)`; startAutoScroll(); openCaseBtn.disabled=true; openCaseBtn.textContent='Кручу...';
     setTimeout(()=>{
@@ -185,11 +213,14 @@ function startSpinner(){ if(!spinnerWrap || !spinnerList) return; if(!spinnerLis
         requestAnimationFrame(()=> spinnerList.style.transform = `translateY(-${targetOffset}px)` );
         spinnerList.addEventListener('transitionend', function onEnd(){ spinnerList.removeEventListener('transitionend', onEnd);
             const landedIndex = targetIndex % PRIZES.length; const prize = PRIZES[landedIndex];
+            const demo = isDemoMode();
             if(!isCurrentOwner()) localStorage.setItem(FREE_KEY, Date.now().toString());
-            const match = prize.label.match(/(\d+(?:[.,]\d+)?)/);
-            if(match){ const num = parseFloat(match[1].replace(',', '.')); if(!isNaN(num) && num>0){ setStoredBalance(getStoredBalance()+num); } }
-                    openCaseBtn.textContent = `Вы выиграли ${prize.label}!`;
-            caseMessage.textContent = 'Поздравляем!';
+            if(!demo){
+                const match = prize.label.match(/(\d+(?:[.,]\d+)?)/);
+                if(match){ const num = parseFloat(match[1].replace(',', '.')); if(!isNaN(num) && num>0){ setStoredBalance(getStoredBalance()+num); } }
+            }
+            openCaseBtn.textContent = demo ? `Демо: ${prize.label}` : `Вы выиграли ${prize.label}!`;
+            caseMessage.textContent = demo ? 'Режим демо: баланс не изменяется.' : 'Поздравляем!';
             addLiveFeedItem('Вы', prize.label);
             setTimeout(()=>{ spinnerWrap.classList.add('hidden'); refreshOverlayState(); },1400);
         });
@@ -204,8 +235,7 @@ const crash = document.querySelector('.crash'); if(crash) crash.addEventListener
 
     // If owner id was hardcoded, save to localStorage so checks work
     if(OWNER_ID_HARD){ localStorage.setItem('ownerId', OWNER_ID_HARD); }
-
+    setDemoMode(localStorage.getItem(DEMO_KEY) === '1');
     openPage('games');
-    startLiveFeed();
 
 });
