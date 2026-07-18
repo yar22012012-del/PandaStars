@@ -2,7 +2,7 @@
 const OWNER_ID_HARD = '7054395396'; // hardcoded owner id
 
 // Pages handling
-document.addEventListener('DOMContentLoaded', function(){
+document.addEventListener('DOMContentLoaded', async function(){
     
     const pages = {
     games: document.getElementById('gamesPage'),
@@ -44,6 +44,13 @@ const BALANCE_KEY = 'pandaBalance';
 const OWNER_KEY = 'ownerId';
 const DEMO_KEY = 'demoMode';
 const OWNER_BYPASS = true; // owner mode: case available anytime
+const API_BASE_URL = 'http://localhost:8080/api';
+
+let serverUserId = null;
+let serverUserName = '';
+let serverLastFreeCase = 0;
+let serverBalance = null;
+let useServerSync = false;
 
 const freeCard = document.querySelector('.free');
 const overlay = document.getElementById('freeCaseOverlay');
@@ -77,6 +84,15 @@ function getCurrentTelegramUserId(){
     return null;
 }
 
+function getCurrentTelegramUserName(){
+    try{
+        if(window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe && Telegram.WebApp.initDataUnsafe.user){
+            return Telegram.WebApp.initDataUnsafe.user.username || '';
+        }
+    }catch(e){ }
+    return '';
+}
+
 function getStoredOwnerId(){ return localStorage.getItem(OWNER_KEY) || OWNER_ID_HARD; }
 function isCurrentOwner(){ const owner = getStoredOwnerId(); const cur = getCurrentTelegramUserId(); return owner && cur && owner === cur; }
 
@@ -84,9 +100,49 @@ function isDemoMode(){ return localStorage.getItem(DEMO_KEY) === '1'; }
 
 function setDemoMode(enabled){ localStorage.setItem(DEMO_KEY, enabled ? '1' : '0'); if(demoToggle) demoToggle.checked = enabled; }
 
+async function requestJson(url, options={}){
+    try{
+        const response = await fetch(url, options);
+        if(!response.ok){ throw new Error('HTTP ' + response.status); }
+        return await response.json();
+    }catch(err){
+        console.warn('[api] request failed', err, url);
+        return null;
+    }
+}
+
+async function initServerSync(){
+    const userId = getCurrentTelegramUserId();
+    if(!userId) return false;
+    serverUserId = userId;
+    serverUserName = getCurrentTelegramUserName();
+    const url = `${API_BASE_URL}/user/${encodeURIComponent(userId)}`;
+    const data = await requestJson(url);
+    if(!data) return false;
+    useServerSync = true;
+    serverBalance = parseInt(data.balance ?? 0, 10);
+    serverLastFreeCase = parseInt(data.last_free_case ?? 0, 10);
+    setStoredBalance(serverBalance);
+    return true;
+}
+
+async function updateServerUser(balance, lastFreeCase){
+    if(!useServerSync || !serverUserId) return;
+    const url = `${API_BASE_URL}/user/${encodeURIComponent(serverUserId)}`;
+    await requestJson(url, {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({
+            username: serverUserName,
+            balance: balance,
+            last_free_case: lastFreeCase
+        })
+    });
+}
+
 function refreshOverlayState(){
     if(!overlay) return;
-    const last = parseInt(localStorage.getItem(FREE_KEY) || '0',10);
+    const last = useServerSync ? serverLastFreeCase : parseInt(localStorage.getItem(FREE_KEY) || '0',10);
     const now = Date.now();
     const owner = localStorage.getItem(OWNER_KEY);
     const currentId = getCurrentTelegramUserId();
@@ -110,7 +166,7 @@ function refreshOverlayState(){
     }
 }
 
-function updateCountdown(){ const last=parseInt(localStorage.getItem(FREE_KEY)||'0',10); const left = DAY_MS - (Date.now()-last); if(left<=0){ refreshOverlayState(); return; } const h=Math.floor(left/3600000); const m=Math.floor((left%3600000)/60000); const s=Math.floor((left%60000)/1000); countdownEl.textContent = `До следующего открытия осталось ${pad(h)}:${pad(m)}:${pad(s)}`; }
+function updateCountdown(){ const last=useServerSync ? serverLastFreeCase : parseInt(localStorage.getItem(FREE_KEY)||'0',10); const left = DAY_MS - (Date.now()-last); if(left<=0){ refreshOverlayState(); return; } const h=Math.floor(left/3600000); const m=Math.floor((left%3600000)/60000); const s=Math.floor((left%60000)/1000); countdownEl.textContent = `До следующего открытия осталось ${pad(h)}:${pad(m)}:${pad(s)}`; }
 
 function prepareSpinner(){ if(!spinnerList) return; buildSpinner(); const el = spinnerList.querySelector('.spin-item'); if(el) itemHeight = el.getBoundingClientRect().height || 76; totalItems = PRIZES.length*REPEAT; totalHeight = itemHeight * totalItems; const startIndex = Math.floor(totalItems / 2); currentOffset = startIndex * itemHeight; spinnerList.style.transition = 'none'; spinnerList.style.transform = `translateY(-${currentOffset}px)`; }
 
@@ -219,10 +275,19 @@ function startSpinner(){ if(!spinnerWrap || !spinnerList) return; if(!spinnerLis
         spinnerList.addEventListener('transitionend', function onEnd(){ spinnerList.removeEventListener('transitionend', onEnd);
             const landedIndex = targetIndex % PRIZES.length; const prize = PRIZES[landedIndex];
             const demo = isDemoMode();
-            if(!isCurrentOwner()) localStorage.setItem(FREE_KEY, Date.now().toString());
+            const timestamp = Date.now();
+            if(!isCurrentOwner()){
+                if(useServerSync){
+                    serverLastFreeCase = timestamp;
+                } else {
+                    localStorage.setItem(FREE_KEY, timestamp.toString());
+                }
+            }
             if(!demo){
                 const match = prize.label.match(/(\d+(?:[.,]\d+)?)/);
-                if(match){ const num = parseFloat(match[1].replace(',', '.')); if(!isNaN(num) && num>0){ setStoredBalance(getStoredBalance()+num); } }
+                if(match){ const num = parseFloat(match[1].replace(',', '.')); if(!isNaN(num) && num>0){ const newBalance = getStoredBalance()+num; setStoredBalance(newBalance); if(useServerSync){ serverBalance = newBalance; updateServerUser(newBalance, serverLastFreeCase); } } }
+            } else if(useServerSync){
+                updateServerUser(getStoredBalance(), serverLastFreeCase);
             }
             openCaseBtn.textContent = demo ? `Демо: ${prize.label}` : `Вы выиграли ${prize.label}!`;
             caseMessage.textContent = demo ? 'Режим демо: баланс не изменяется.' : 'Поздравляем!';

@@ -16,7 +16,7 @@ from handlers.clicker import router as clicker_router
 from handlers.gifts import router as gifts_router
 from handlers.game import router as game_router
 from handlers.admin import admin_router
-
+from api import start_api
 
 
 bot = Bot(
@@ -36,6 +36,7 @@ async def main():
 
     await create_database()
 
+    await start_api(host='127.0.0.1', port=8080)
 
 
     dp.include_router(

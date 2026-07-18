@@ -28,6 +28,8 @@ async def create_database():
 
                 last_click INTEGER DEFAULT 0,
 
+                last_free_case INTEGER DEFAULT 0,
+
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
             )
@@ -35,13 +37,26 @@ async def create_database():
         )
 
 
-        # добавление новой колонки для старой базы
+        # добавление новых колонок для старой базы
         try:
 
             await db.execute(
                 """
                 ALTER TABLE users
                 ADD COLUMN total_earned INTEGER DEFAULT 0
+                """
+            )
+
+        except:
+
+            pass
+
+        try:
+
+            await db.execute(
+                """
+                ALTER TABLE users
+                ADD COLUMN last_free_case INTEGER DEFAULT 0
                 """
             )
 
